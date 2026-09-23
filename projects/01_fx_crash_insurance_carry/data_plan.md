@@ -17,8 +17,8 @@ Access is through the LSEG Data Library for Python (desktop session), using the 
 | 25Δ butterfly | `<CCY><T>BF=` | Composite, Fenics | Bid, ask, mid |
 | 10Δ risk reversal | `<CCY><T>R10=` | Composite, Fenics | Bid, ask, mid |
 | 10Δ butterfly | `<CCY><T>B10=` | Composite, Fenics | Bid, ask, mid |
-| USD one-month rates | `USD1MOIS=` (Fed Funds OIS), `USDSROIS1M=` (SOFR OIS) | Composite | Bid, ask |
-| Other one-month rates | `<CCY>1MD=` (deposit), `<CCY>1MOIS=` where available | Composite | Bid, ask |
+| USD one-month rates | `USD1MOIS=` (Fed Funds OIS), `USDSROIS1M=` (SOFR OIS), `USD1MD=` (deposit) | Composite | Bid, ask |
+| Other one-month rates | `<CCY>1MD=` (deposit), `<CCY>1MOIS=` where available (no such RIC exists for EUR or SEK) | Composite | Bid, ask |
 | VIX futures | `VXc1`, `VXc2` | Exchange | Settlement or close |
 
 **Also available:**
@@ -35,6 +35,8 @@ Access is through the LSEG Data Library for Python (desktop session), using the 
 | Federal Reserve H.10 and H.15 releases, if needed | Rate and spot cross-checks | Public domain (US government) |
 
 Each public snapshot is stored under `data/public/<source>/<date>/` with its original bytes, URL, retrieval time, SHA-256 hash and licence note.
+
+**Open question.** The provider does not document the snapshot time of daily history (London or New York close). The answer matters for aligning month-ends and for option payoffs, and is recorded in the research log once established.
 
 ## Storage and provenance
 

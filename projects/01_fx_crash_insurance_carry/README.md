@@ -2,7 +2,7 @@
 
 Does the ex-ante price of crash insurance in G10 FX option smiles explain the collapse of the currency carry premium after 2008 and its revival in 2022–2026?
 
-The data are daily dealer-contributed FX option quotes from LSEG Workspace, from 2007 for seven currencies and for all nine from the primary-sample start:
+The data are daily dealer-contributed FX option quotes from LSEG Workspace, for nine G10 currencies against the US dollar:
 
 - at-the-money volatility;
 - 25Δ and 10Δ risk reversals;
@@ -23,7 +23,7 @@ Each month-end smile is converted into strikes and prices under market quoting c
 | [research_log.md](research_log.md) | Dated decisions and deviations |
 | [reports/](reports/) | Audit record and results |
 
-**Status:** Stage 1 (data audit). The pricing and smile engine is implemented and tested on synthetic and analytic cases. No empirical results yet.
+**Status:** Stage 1. The LSEG panel is acquired and audited (checks 1 to 5, 8 and 9; see [reports/data_audit.md](reports/data_audit.md)). Checks 6 and 7 and a revision check remain. The pricing and smile engine is implemented and cross-checked against QuantLib. No empirical results yet.
 
 ## Reproduction
 
