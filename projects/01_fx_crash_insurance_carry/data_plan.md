@@ -30,7 +30,7 @@ Access is through the LSEG Data Library for Python (desktop session), using the 
 
 | Source | Use | Licence to record |
 | --- | --- | --- |
-| Cboe VIX futures historical data (cboe.com) | Cross-check for E5 | Cboe terms of use |
+| Cboe VX historical data: one daily settlement file per contract (`scripts/acquire_cboe_vx.py`) | VIX roll-down factor in E5; checked against LSEG `VXc2` | Redistribution not established: stored in `data/private/cboe/` |
 | Verdelhan currency portfolios (web.mit.edu/adrienv) | Sign and magnitude check of HML_FX | Author terms |
 | Federal Reserve H.10 and H.15 releases, if needed | Rate and spot cross-checks | Public domain (US government) |
 

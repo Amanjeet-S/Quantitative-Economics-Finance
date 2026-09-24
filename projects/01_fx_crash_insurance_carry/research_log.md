@@ -68,3 +68,11 @@
   - The regime-shift claim therefore has partial support only.
   - In E3, the realised hedge cost is almost entirely the skew term, and θ_UB is weakly identified.
 - **Remaining for Stage 4:** E5, which needs individual VIX futures contracts, not the continuation series acquired so far.
+
+## 2026-09-24 (Stage 4, part B: E5)
+
+- **VIX data.** Individual VIX futures contracts were taken from Cboe's historical settlement files, one per contract from January 2007 to December 2026, stored privately (`scripts/acquire_cboe_vx.py`). Before 26 March 2007 the archive quotes contracts at ten times the index level. The change of scale is detected in the files themselves and removed, including for contracts that expired before that date. After this, Cboe second-month settlements equal the LSEG second-month continuation at every month-end.
+- **VIX roll-down.** Caballero and Doyle (2012) short the VIX future whose expiry matches the one-month forward's maturity and hold it to expiry. The design's factor is a month-end analogue: the second-month contract, held over the carry return window from the month-end to the FX option expiry.
+- **Correction before recording: Stage 4 return windows.** The data check exposed an error. The last E1 month-end's return window ends after the last spot observation, and the spot look-up had substituted an earlier quote. Windows that end after the data are now excluded, and substitution is limited to five New York business days as designed. The primary return sample is 159 months. The E2 and E3 estimates changed only in the third significant figure, and [reports/stage4.md](reports/stage4.md) reports the corrected values.
+- **E5 result.** Unhedged carry loads strongly on the VIX roll-down. The 10Δ hedge lowers the loading by about a fifth. After adjusting for the VIX and FX-volatility factors, neither portfolio earns a significant α, and the exposure-adjusted hedge-cost ratio is unidentified.
+- **Stage 4 complete.** Next: Stage 5.

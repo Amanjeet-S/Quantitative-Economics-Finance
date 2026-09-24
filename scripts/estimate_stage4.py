@@ -55,11 +55,17 @@ def daily_spot_mid(raw: Path, ccy: str) -> pd.Series:
 
 
 def spot_on(series: pd.Series, date: pd.Timestamp, window: int = 5):
-    """Spot on `date`, or the last quote within `window` business days before it."""
+    """Spot on `date`, or the last quote within `window` New York business days before it.
+
+    A date after the last available observation has not been realised yet and
+    returns NaN, so incomplete return windows at the end of the sample are excluded.
+    """
+    if date > series.index[-1]:
+        return np.nan, -1
     if date in series.index:
         return float(series.loc[date]), 0
     prior = series.loc[:date]
-    if prior.empty or (date - prior.index[-1]).days > 2 * window:
+    if prior.empty or len(pd.date_range(prior.index[-1], date, freq=BDAY)) - 1 > window:
         return np.nan, -1
     return float(prior.iloc[-1]), 1
 

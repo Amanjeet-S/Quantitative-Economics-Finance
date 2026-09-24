@@ -51,7 +51,7 @@ Every source cited in the project, what it is used for, and the version consulte
 
 | Reference | Used for | Consulted |
 | --- | --- | --- |
-| Caballero, R. J. and Doyle, J. B. (2012). Carry trade and systemic risk: why are FX options so cheap? NBER Working Paper 18644 | Option-hedged carry as cheap systemic insurance; VIX roll-down comparison (E5) | NBER abstract |
+| Caballero, R. J. and Doyle, J. B. (2012). Carry trade and systemic risk: why are FX options so cheap? NBER Working Paper 18644 | Option-hedged carry as cheap systemic insurance; the VIX roll-down strategy (short the VIX future whose expiry matches the one-month forward's maturity, held to expiry) that E5 adapts to month-ends | NBER Working Paper 18644, abstract, introduction and data section |
 | Farhi, E., Fraiberger, S. P., Gabaix, X., Rancière, R. and Verdelhan, A. (2009). Crash risk in currency markets. NBER Working Paper 15062 | Closest work | NBER landing page; content to be read before the final report |
 | Kutuk, M. M. and van Wijnbergen, S. (2025). Carry trade and currency crash risk. CEPR Discussion Paper 20745 | Closest recent application of the hedged-versus-unhedged comparison; USD/TRY only | Tinbergen Institute Discussion Paper TI 2025-058/IV (1 October 2025), full text |
 
@@ -72,5 +72,6 @@ The project's code is written independently; these packages were read or run to 
 | Federal Reserve Board, Holidays Observed (K.8), https://www.federalreserve.gov/aboutthefed/k8.htm | New York business-day calendar in `src/qef/data/panel.py` |
 | LSEG Developer Portal, IPA Volatility Surfaces: FX (consulted 24 September 2026) | Check 6: defaults of LSEG-built surfaces; no definition of contributed quotes |
 | LSEG Workspace, FX option volatility, forward, deposit, OIS and VIX futures instruments (retrieved 23 September 2026) | Primary data; see [data_plan.md](data_plan.md) |
+| Cboe Futures Exchange, VX historical data, daily settlement files per contract (retrieved 24 September 2026) | VIX roll-down factor in E5; stored privately because redistribution terms are not established |
 
 Sources marked "content to be read before the final report" are cited only for the method or result named in their title. They will be read, and this table updated, before any result depends on them.

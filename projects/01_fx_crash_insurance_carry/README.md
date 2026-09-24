@@ -24,7 +24,7 @@ Each month-end smile is converted into strikes and prices under market quoting c
 | [references.md](references.md) | Every source, what it is used for and the version consulted |
 | [reports/](reports/) | Audit record and results |
 
-**Status:** Stages 1 to 3 complete; Stage 4 complete except E5. Results: [E1 and E4](reports/e1.md), [portfolio returns, E2 and E3](reports/stage4.md). E5 needs individual VIX futures contracts and is next; a quote-revision check remains from Stage 1.
+**Status:** Stages 1 to 4 complete. Results: [E1 and E4](reports/e1.md); [portfolio returns, E2, E3 and E5](reports/stage4.md). Next: Stage 5 (robustness, remaining proofs, C++ kernel). A quote-revision check remains from Stage 1.
 
 ## Reproduction
 
