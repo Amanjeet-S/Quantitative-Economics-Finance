@@ -46,6 +46,7 @@ Every source cited in the project, what it is used for, and the version consulte
 | Sampford, M. R. (1953). Some inequalities on Mill's ratio and related functions. *Annals of Mathematical Statistics* 24(1), 130–132. doi:10.1214/aoms/1177729093 | Classical monotonicity of the Mills ratio (R5 lemma, proved independently in the notes) | Bibliographic record |
 | Shreve, S. E. (2004). *Stochastic Calculus for Finance II: Continuous-Time Models*. Springer | Girsanov's theorem and Feynman–Kac (R1, Garman–Kohlhagen PDE) | Bibliographic record; cited for standard textbook statements |
 | Stambaugh, R. F. (1999). Predictive regressions. *Journal of Financial Economics* 54(3), 375–421. doi:10.1016/S0304-405X(99)00041-0 | Small-sample bias of the predictive slope; first-order approximation −(σ_uv/σ_v²)(1 + 3ρ)/T (E2) | Published article (ScienceDirect), Section 2, Corollary, eq. (18) |
+| Süli, E. and Mayers, D. F. (2003). *An Introduction to Numerical Analysis*. Cambridge University Press. doi:10.1017/CBO9780511801181 | Composite trapezium and Simpson error bounds (R4 remark) | Bibliographic record; cited for the classical composite-rule error bounds |
 
 ## Working papers
 

@@ -1,6 +1,6 @@
 # Theory
 
-Results used in the [research design](../research_design.md). Proofs are written in `notes.tex`.
+Results used in the [research design](../research_design.md). Every result marked P or P\* is proved in `notes.tex` (compiled as `notes.pdf`); R9 is cited with its conditions.
 
 **Labels:**
 
@@ -66,7 +66,7 @@ Results used in the [research design](../research_design.md). Proofs are written
 
 **Output.** Variance and skewness are reported as intervals over a stated range of α, truncating at the 10Δ strikes.
 
-**Quadrature.** F is a node, because the integrand has a kink there. Trapezoid error is O(h²) and Simpson error O(h⁴) on each side.
+**Quadrature.** F is a node, because the integrand has a kink there. Trapezium error is O(h²) and Simpson error O(h⁴) on each side.
 
 ## R5. Delta-to-strike inversion
 
@@ -78,7 +78,7 @@ Results used in the [research design](../research_design.md). Proofs are written
 - Since φ/Φ is strictly decreasing, h is strictly increasing then strictly decreasing, with a unique maximiser K*.
 - Each attainable Δ has exactly two strikes; the convention takes the root in [K*, ∞).
 
-**(c)** Conditions on σ(·) under which K ↦ Δ(K, σ(K)) is monotone; checked numerically on the panel.
+**(c) (P)** For pips delta Δ_φ(K) = φ D Φ(φ d₊(K, σ(K))): if |∂σ/∂k| √τ |d₋| < 1 on an interval (k = ln(K/F)), Δ_φ is strictly decreasing there, so the smile delta-to-strike map is injective. The condition holds over ±4 ATM standard deviations at every calibrated month-end; premium-adjusted deltas are checked numerically.
 
 **Sources.** Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention; the proof of (b) is written here.
 
@@ -119,7 +119,7 @@ Results used in the [research design](../research_design.md). Proofs are written
 - the 25Δ risk reversal at the smile's own 25Δ strikes;
 - equality of the market-strangle premium under the smile and under the flat volatility σ_ATM + BF.
 
-**Statement.** If the Jacobian is non-singular at a solution and R5(c) holds at the three strikes, the solution is locally unique and C¹ in the quotes (implicit function theorem).
+**Statement.** If the Hagan volatility is smooth (a lemma for β = 1), the strike fixed points are non-degenerate (R5(c)) and the Jacobian is non-singular at a solution, the solution is locally unique and C¹ in the quotes (implicit function theorem, applied first to the strikes and then to the system).
 
 **Implementation.** `src/qef/fx/smile.py`, in the variables (ln α, atanh ρ, ln ν).
 
@@ -137,6 +137,6 @@ Results used in the [research design](../research_design.md). Proofs are written
 
 ## Supporting derivation: the Garman–Kohlhagen PDE
 
-- Via Feynman–Kac, with terminal condition (S − K)⁺.
-- Unique among C^{1,2} solutions of polynomial growth.
-- No boundary condition at S = 0.
+- (P) The Garman–Kohlhagen price solves the PDE with terminal condition (S − K)⁺ (direct verification).
+- It is the unique C^{1,2} solution of polynomial growth that is continuous up to T (Feynman–Kac with localisation).
+- No boundary condition at S = 0 is needed, because the exchange rate never reaches zero.

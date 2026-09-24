@@ -76,3 +76,13 @@
 - **Correction before recording: Stage 4 return windows.** The data check exposed an error. The last E1 month-end's return window ends after the last spot observation, and the spot look-up had substituted an earlier quote. Windows that end after the data are now excluded, and substitution is limited to five New York business days as designed. The primary return sample is 159 months. The E2 and E3 estimates changed only in the third significant figure, and [reports/stage4.md](reports/stage4.md) reports the corrected values.
 - **E5 result.** Unhedged carry loads strongly on the VIX roll-down. The 10Δ hedge lowers the loading by about a fifth. After adjusting for the VIX and FX-volatility factors, neither portfolio earns a significant α, and the exposure-adjusted hedge-cost ratio is unidentified.
 - **Stage 4 complete.** Next: Stage 5.
+
+## 2026-09-24 (Stage 5: proofs)
+
+- **Proofs completed.** The remaining results are now proved in `theory/notes.tex`:
+  - R3 (spanning, with the integrability condition for taking expectations term by term);
+  - R4 (bounds on the unobserved tails from observed wing prices and a tail exponent);
+  - R5(c) (monotonicity of the smile delta, and hence injectivity of delta-to-strike inversion);
+  - R8 (smoothness of the Hagan volatility for β = 1 and local well-posedness of the smile calibration by the implicit function theorem);
+  - the Garman–Kohlhagen PDE (verification, and uniqueness among solutions of polynomial growth).
+- **Supporting checks on the panel.** The R5(c) condition holds over ±4 ATM standard deviations at every calibrated month-end, with a maximum of 0.76 against the bound of 1. Premium-adjusted deltas are monotone on the conventional branch everywhere. The Jacobian condition numbers confirm the non-singularity hypothesis of R8 at every calibration.
