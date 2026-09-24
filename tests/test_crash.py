@@ -35,3 +35,17 @@ def test_downside_skew_makes_crash_protection_expensive():
 def test_rank_legs():
     longs, shorts = rank_legs({"A": 0.3, "B": -0.1, "C": 0.2, "D": 0.0}, 1)
     assert longs == ["A"] and shorts == ["B"]
+
+
+def test_hedged_leg_loss_is_floored_at_the_strike():
+    # EURUSD long, put at K: hedged value at delivery is at least (K - F)/F per USD notional.
+    from qef.fx.crash import forward_return, option_payoff
+    F, K = 1.10, 1.06
+    for S_end in (0.8, 1.0, 1.06, 1.2):
+        hedged = forward_return("EUR", True, S_end, F) + option_payoff("EUR", True, K, F, S_end)
+        assert hedged >= (K - F) / F - 1e-12
+    # USDJPY long JPY (USD call at K): hedged value is at least (F - K)/S_end.
+    F, K = 150.0, 155.0
+    for S_end in (140.0, 155.0, 170.0, 200.0):
+        hedged = forward_return("JPY", True, S_end, F) + option_payoff("JPY", True, K, F, S_end)
+        assert hedged >= (F - K) / S_end - 1e-12

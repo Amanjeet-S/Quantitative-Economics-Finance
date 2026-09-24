@@ -50,3 +50,27 @@ def rank_legs(fd: dict, n_legs: int):
     """Currencies with the n highest (long) and n lowest (short) forward discounts."""
     order = sorted(fd, key=fd.get)
     return order[-n_legs:], order[:n_legs]
+
+
+def forward_return(currency: str, long_leg: bool, S_end, F):
+    """Excess return of one USD of forward notional, at delivery (research design, section 3).
+
+    Long the currency: X_end / F_X − 1, which is S_end/F − 1 for EURUSD-type
+    pairs and F/S_end − 1 for USD-base pairs (X = 1/S). A short leg has the
+    opposite sign. S_end is the spot rate for value on the delivery date, that
+    is, the spot quote on the option expiry date.
+    """
+    r = (F / S_end - 1.0) if G10[currency].usd_base else (S_end / F - 1.0)
+    return r if long_leg else -r
+
+
+def option_payoff(currency: str, long_leg: bool, K, F, S_end):
+    """Payoff of a leg's protective option in USD per USD of forward notional, at delivery.
+
+    The option notional is 1/F units of base currency for EURUSD-type pairs
+    (payoff in USD) and one USD for USD-base pairs (payoff in the quote
+    currency, converted at S_end).
+    """
+    phi = protective_option(currency, long_leg)
+    intrinsic = max(phi * (S_end - K), 0.0)
+    return intrinsic / S_end if G10[currency].usd_base else intrinsic / F

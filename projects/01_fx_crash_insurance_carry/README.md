@@ -24,7 +24,7 @@ Each month-end smile is converted into strikes and prices under market quoting c
 | [references.md](references.md) | Every source, what it is used for and the version consulted |
 | [reports/](reports/) | Audit record and results |
 
-**Status:** Stage 3 complete (E1 and E4; [reports/e1.md](reports/e1.md)). Estimates are held privately until the licence terms for publishing LSEG-derived findings are confirmed. Stage 4 (portfolio returns, E2, E3, E5) is next; a quote-revision check remains from Stage 1.
+**Status:** Stages 1 to 3 complete; Stage 4 complete except E5. Results: [E1 and E4](reports/e1.md), [portfolio returns, E2 and E3](reports/stage4.md). E5 needs individual VIX futures contracts and is next; a quote-revision check remains from Stage 1.
 
 ## Reproduction
 
@@ -41,4 +41,4 @@ python -m venv .venv-lseg && .venv-lseg/bin/pip install -r requirements-lseg.loc
 .venv/bin/python scripts/audit_fx_panel.py
 ```
 
-The App Key is read from `~/.lseg/app_key`. LSEG data and every value derived from them stay in `data/private/`, which Git ignores, until the licence terms for publication are confirmed.
+The App Key is read from `~/.lseg/app_key`. LSEG data are licensed for individual study and research and may not be redistributed. The repository therefore holds code, methods and aggregate results (means, standard errors, test statistics and intervals). It holds no LSEG data and no month-level series or calibrated parameters from which quotes could be reconstructed; these stay in `data/private/`, which Git ignores.

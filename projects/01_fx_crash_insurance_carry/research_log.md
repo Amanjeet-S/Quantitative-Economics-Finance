@@ -53,3 +53,18 @@
 - **Deviation: discount rates.** The design allows OIS "where available" for non-USD currencies. The implementation uses one-month deposit rates for every non-USD currency, for consistency across currencies. Rates enter E1 only through the base-currency discount factor in spot delta. The review bounded the effect on that factor at about 0.1 per cent, which is negligible for the strikes.
 - **Supplementary analyses (post hoc).** Added after the first E1 results, because the series is highly persistent and its zero-rate distribution has a heavy right tail from months with very small forward discounts. With so few effective observations, the automatic Newey–West bandwidth is capped well below what the persistence would require, so the pre-registered intervals are likely too narrow. The additions, listed in [reports/e1.md](reports/e1.md), are reported alongside the pre-registered estimand and do not replace it.
 - **Next:** Stage 4 (portfolio returns, E2, E3 and E5).
+
+## 2026-09-24 (Stage 4, part A)
+
+- **Licence.** The licence holder advised that LSEG data are for individual study and research, may not be redistributed, and may not be placed in a public repository. Publishing the extraction code is acceptable. The repository therefore publishes code, methods and aggregate results, and keeps LSEG data, month-level series and calibrated parameters in `data/private/`.
+- **Sources read before the Stage 4 results.** Clark and West (working-paper version, Section 2) for the MSPE-adjusted statistic. Stambaugh (1999, published version, eq. 18) for the bias approximation. Lustig, Roussanov and Verdelhan (2011, published version) for the portfolio construction. Background sources on which no computation depends are deferred to the report; [references.md](references.md) marks them.
+- **Correction before recording: the E2 bootstrap.** The first implementation resampled blocks of (return, predictor-innovation) pairs. Adjacent pairs inside a block reintroduced the sample's predictive relation into the null distribution, which inflated the estimated bias about tenfold relative to Stambaugh's approximation. The bootstrap now draws pairs of unrestricted-regression residuals and AR(1) residuals independently, and its bias agrees with the approximation.
+- **Correction before recording: the E3 reference θ₀.** It is now the average of the hedges' forward deltas over legs. Leg weights had summed to two.
+- **Clarification.** The design names the Clark–West test without specifying the standard error. Clark and West recommend the least-squares standard error for one-step forecasts, so that is primary and Newey–West is reported alongside.
+- **Results.** Aggregate results are in [reports/e1.md](reports/e1.md) and [reports/stage4.md](reports/stage4.md). Under the pre-registered rules:
+  - The E1 regime difference is not significant.
+  - The bias-corrected E2 slope on φ is positive (one-sided p = 0.021).
+  - The out-of-sample Clark–West statistic is 1.640, against a 5% critical value of 1.645.
+  - The regime-shift claim therefore has partial support only.
+  - In E3, the realised hedge cost is almost entirely the skew term, and θ_UB is weakly identified.
+- **Remaining for Stage 4:** E5, which needs individual VIX futures contracts, not the continuation series acquired so far.
