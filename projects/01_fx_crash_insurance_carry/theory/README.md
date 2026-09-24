@@ -23,7 +23,7 @@ Results used in the [research design](../research_design.md). Proofs are written
 - (c) Foreign prices discounted by B^f are Q^f-martingales exactly when their domestic values discounted by B^d are Q^d-martingales.
 - (d) Under Garman–Kohlhagen, E^{Q^d} S_T = F and E^{Q^f}(1/S_T) = 1/F. This is Siegel's paradox resolved.
 
-**Remark.** If Z is a strict local martingale, then E Z_T < 1 and the symmetry fails (Carr, Fisher and Ruf, 2014).
+**Remark.** If Z is only a strict local martingale, then E Z_T < 1 and Z_T does not define an equivalent measure. Carr, Fisher and Ruf (2014) construct the foreign measure as a Föllmer measure that is not equivalent to Q^d, and restore the domestic-foreign symmetry with a modified pricing operator.
 
 **Source.** Geman, El Karoui and Rochet (1995).
 
@@ -80,6 +80,8 @@ Results used in the [research design](../research_design.md). Proofs are written
 
 **(c)** Conditions on σ(·) under which K ↦ Δ(K, σ(K)) is monotone; checked numerically on the panel.
 
+**Sources.** Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention; the proof of (b) is written here.
+
 **Implementation.** `src/qef/fx/gk.py`.
 
 ## R6 (P). Diffusive null of the hedge cost
@@ -106,7 +108,7 @@ Results used in the [research design](../research_design.md). Proofs are written
 - (i) E_t[Δs + r* − r] = L_t(M) − L_t(M*), and E_t[s_{t+1} − f_t] = L_t(M) − L_t(M*) − x_t.
 - (ii) If the cumulant generating function of m has a Maclaurin series with radius of convergence greater than 1, then L_t(M) = Σ_{j≥2} κ_j/j!.
 
-**Entropy bound** (Bansal and Lehmann, 1997). E L_t(M) ≥ E[log R − log R_f] for funded returns R > 0.
+**Entropy bound** (Bansal and Lehmann, 1997; Alvarez and Jermann, 2005; as stated in Backus, Chernov and Zin, 2014). E L_t(M) ≥ E[log R − log R_f] for funded returns R > 0.
 
 **Sources.** Backus, Foresi and Telmer (2001); Backus, Chernov and Zin (2014); Brandt, Cochrane and Santa-Clara (2006).
 
@@ -123,13 +125,13 @@ Results used in the [research design](../research_design.md). Proofs are written
 
 ## R9 (C). Inference
 
-**Central limit theorem.**
+**Central limit theorem** (Ibragimov, 1962, Theorem 1.7).
 - Strict stationarity.
 - E|X|^{2+δ} < ∞.
 - Σ α(n)^{δ/(2+δ)} < ∞.
 - A positive long-run variance.
 
-**Stationary bootstrap.** Politis and Romano (1994, Thm 1), or Gonçalves and de Jong (2003).
+**Stationary bootstrap.** Politis and Romano (1994); the moment and mixing conditions are those of Theorem 2 in their technical-report version (Politis and Romano, 1991). Weaker conditions: Gonçalves and de Jong (2003).
 
 **The ratio θ.** Confidence procedures that are bounded with probability one have zero worst-case coverage (Gleser and Hwang, 1987; Dufour, 1997), so test inversion is used.
 

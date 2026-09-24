@@ -21,9 +21,10 @@ Each month-end smile is converted into strikes and prices under market quoting c
 | [theory/](theory/README.md) | Results R1–R9 and proofs |
 | [data_plan.md](data_plan.md) | Instruments, storage and audit checks |
 | [research_log.md](research_log.md) | Dated decisions and deviations |
+| [references.md](references.md) | Every source, what it is used for and the version consulted |
 | [reports/](reports/) | Audit record and results |
 
-**Status:** Stage 1. The LSEG panel is acquired and audited (checks 1 to 5, 8 and 9; see [reports/data_audit.md](reports/data_audit.md)). Checks 6 and 7 and a revision check remain. The pricing and smile engine is implemented and cross-checked against QuantLib. No empirical results yet.
+**Status:** Stage 2 complete; Stage 1 complete except a quote-revision check. The LSEG panel is acquired and audited ([reports/data_audit.md](reports/data_audit.md)), and every month-end smile is calibrated and checked for static arbitrage ([reports/smile_calibration.md](reports/smile_calibration.md)). Stage 3 (E1 and E4) is next. No estimates of the research quantities yet.
 
 ## Reproduction
 

@@ -11,19 +11,43 @@
 \renewcommand{\P}{\mathbb{P}}
 
 \title{Crash insurance and the G10 carry premium: theory notes}
-\date{Version of 23 September 2026}
-\author{}
+\author{Amanjeet Singh}
+\date{Version of 24 September 2026}
 
 \begin{document}
 \maketitle
 
-\noindent These notes prove the results listed in \texttt{theory/README.md}. Throughout, $\Phi$ and $\varphi$ are the standard normal distribution and density functions, $s=\sigma\sqrt{\tau}$, and for forward $F$ and strike $K$
+\noindent These notes prove the results listed in \texttt{theory/README.md}. Results that are standard are marked as such and attributed; the proofs written here are the author's own unless a source is named. Throughout, $\Phi$ and $\varphi$ are the standard normal distribution and density functions, $s=\sigma\sqrt{\tau}$, and for forward $F$ and strike $K$
 \[
 d_\pm(K)=\frac{\ln(F/K)\pm s^2/2}{s}.
 \]
-We use the identity $K\varphi(d_-)=F\varphi(d_+)$ repeatedly.
+The identity $K\varphi(d_-)=F\varphi(d_+)$ is used repeatedly.
+
+\section*{R1. Domestic and foreign risk-neutral measures}
+
+This is the change of numeraire of Geman, El Karoui and Rochet (1995); the statement and proof are included for completeness. Girsanov's theorem and It\^o's formula are used in the form given by Shreve (2004).
+
+Let $(\Omega,\mathcal F,(\mathcal F_t)_{t\in[0,T]},\Q^d)$ satisfy the usual conditions, let $B^d,B^f$ be strictly positive adapted money-market accounts with $B^d_0=B^f_0=1$, and let $S>0$ be adapted and c\`adl\`ag. Assume $Z_t=S_tB^f_t/(S_0B^d_t)$ is a true $\Q^d$-martingale and define $d\Q^f/d\Q^d=Z_T$ on $\mathcal F_T$.
+
+\begin{proposition}
+(a) $\Q^f$ is a probability measure equivalent to $\Q^d$. (b) For $\mathcal F_T$-measurable $X\ge0$ or $X\in L^1(\Q^f)$, $\E^{\Q^f}[X\mid\mathcal F_t]=\E^{\Q^d}[Z_TX\mid\mathcal F_t]/Z_t$. (c) An adapted process $Y$ with $Y_t\in L^1(\Q^f)$ is a $\Q^f$-martingale if and only if $ZY$ is a $\Q^d$-martingale; in particular a foreign price $V^f$ satisfies: $V^f/B^f$ is a $\Q^f$-martingale if and only if $SV^f/B^d=S_0Z\,(V^f/B^f)$ is a $\Q^d$-martingale. (d) If $dS_t/S_t=(r_d-r_f)\,dt+\sigma\,dW_t$ under $\Q^d$ with constant coefficients, then $W^f_t=W_t-\sigma t$ is a $\Q^f$-Brownian motion, $d(1/S_t)=(1/S_t)[(r_f-r_d)\,dt-\sigma\,dW^f_t]$, and $\E^{\Q^d}S_T=F$, $\E^{\Q^f}(1/S_T)=1/F$ with $F=S_0e^{(r_d-r_f)T}$.
+\end{proposition}
+
+\begin{proof}
+(a) $Z_T>0$ and $\E^{\Q^d}Z_T=Z_0=1$, so $\Q^f$ is a probability measure; positivity of $Z_T$ gives equivalence. (b) For $\mathcal F_t$-measurable $Y\ge0$, the tower property and the martingale property give $\E^{\Q^f}Y=\E^{\Q^d}[Z_TY]=\E^{\Q^d}[Z_tY]$. For $A\in\mathcal F_t$,
+\[
+\E^{\Q^f}[X\mathbf 1_A]=\E^{\Q^d}\bigl[\E^{\Q^d}[Z_TX\mid\mathcal F_t]\mathbf 1_A\bigr]=\E^{\Q^f}\Bigl[\frac{\E^{\Q^d}[Z_TX\mid\mathcal F_t]}{Z_t}\mathbf 1_A\Bigr],
+\]
+which characterises the conditional expectation. (c) Apply (b) on $[s,t]$: $\E^{\Q^f}[Y_t\mid\mathcal F_s]=\E^{\Q^d}[Z_tY_t\mid\mathcal F_s]/Z_s$, so $Y$ is a $\Q^f$-martingale exactly when $\E^{\Q^d}[Z_tY_t\mid\mathcal F_s]=Z_sY_s$. (d) Here $Z_t=\exp(\sigma W_t-\sigma^2t/2)$, so Girsanov's theorem gives the first claim, and It\^o's formula for $1/S$ gives the dynamics. The expectations follow from the lognormal law under each measure.
+\end{proof}
+
+\begin{remark}
+Jensen's inequality gives $\E^{\Q^d}(1/S_T)>1/\E^{\Q^d}S_T=1/F$. There is no contradiction with (d): the foreign investor's forward price is an expectation under $\Q^f$, not $\Q^d$ (Siegel's paradox). If $Z$ is only a strict local martingale, then $\E Z_T<1$ and $Z_T$ does not define an equivalent probability measure. Carr, Fisher and Ruf (2014) construct the foreign measure in that case as a F\"ollmer measure that is not equivalent to $\Q^d$, and restore the domestic--foreign symmetry with a modified pricing operator.
+\end{remark}
 
 \section*{R2. Arbitrage-free call prices}
+
+The link between the second strike derivative of call prices and state prices is due to Breeden and Litzenberger (1978). The characterisation below, with its measure-theoretic proof, is stated and proved here.
 
 \begin{proposition}
 Let $c:[0,\infty)\to\mathbb{R}$ and $F>0$. There is a random variable $X\ge 0$ with $\E X=F$ and $c(K)=\E(X-K)^+$ for all $K\ge0$ if and only if (i) $c$ is convex, (ii) $c(0)=F$, (iii) $c'_+(0)\ge -1$ and (iv) $c(K)\to0$ as $K\to\infty$. The law of $X$ is then unique, with distribution function $G=1+c'_+$ on $[0,\infty)$ and $\P(X=0)=1+c'_+(0)$.
@@ -42,10 +66,12 @@ and $\E X=c(0)=F$. Uniqueness holds because $c$ determines $c'_+$ and hence $G$.
 \end{proof}
 
 \begin{remark}
-Extending $c$ by $c(K)=F-K$ for $K<0$, the second distributional derivative of $c$ on $\mathbb{R}$ is the law of $X$; the jump of $c'$ at $0$ carries the atom $\P(X=0)$. On a finite strike grid the necessary conditions reduce to slopes in $[-1,0]$ that are nondecreasing, which is the discrete test used in \texttt{src/qef/fx/arbitrage.py}.
+Extending $c$ by $c(K)=F-K$ for $K<0$, the second distributional derivative of $c$ on $\mathbb{R}$ is the law of $X$; the jump of $c'$ at $0$ carries the atom $\P(X=0)$. On a finite strike grid the necessary conditions reduce to slopes in $[-1,0]$ that are nondecreasing, which is the discrete test used in \texttt{src/qef/fx/arbitrage.py}. The implementation also applies the density condition on implied total variance of Gatheral and Jacquier (2014, eq.~(2.1) and Lemma~2.2).
 \end{remark}
 
 \section*{R5(b). Premium-adjusted call delta}
+
+The premium-adjusted delta, its non-monotonicity in the strike and the market practice of taking the strike to the right of the delta maximum are described by Reiswich and Wystup (2012). The proposition below makes the shape precise and is proved here.
 
 Let $D\in(0,1]$ and $h(K)=D\,(K/F)\,\Phi\bigl(d_-(K)\bigr)$ for $K>0$. With spot delta, $D$ is the base-currency discount factor; with forward delta, $D=1$.
 
@@ -54,7 +80,7 @@ The inverse Mills ratio $\lambda(d)=\varphi(d)/\Phi(d)$ is strictly decreasing o
 \end{lemma}
 
 \begin{proof}
-Differentiation gives $\lambda'(d)=-\lambda(d)\,[d+\lambda(d)]$, so it suffices that $d\,\Phi(d)+\varphi(d)>0$. This function has derivative $\Phi(d)>0$ and tends to $0$ as $d\to-\infty$; hence $d\,\Phi(d)+\varphi(d)=\int_{-\infty}^d\Phi(u)\,du>0$. The limits follow from $\Phi\to0$, $\varphi\to0$ and the Mills-ratio asymptotics $\Phi(d)\sim\varphi(d)/|d|$ as $d\to-\infty$.
+Differentiation gives $\lambda'(d)=-\lambda(d)\,[d+\lambda(d)]$, so it suffices that $d\,\Phi(d)+\varphi(d)>0$. This function has derivative $\Phi(d)>0$ and tends to $0$ as $d\to-\infty$; hence $d\,\Phi(d)+\varphi(d)=\int_{-\infty}^d\Phi(u)\,du>0$. The limits follow from $\Phi\to0$, $\varphi\to0$ and the Mills-ratio asymptotics $\Phi(d)\sim\varphi(d)/|d|$ as $d\to-\infty$. Inequalities of this type for the Mills ratio are classical; see Sampford (1953).
 \end{proof}
 
 \begin{proposition}
@@ -76,6 +102,8 @@ The market convention selects the preimage in $[K^*,\infty)$. At one month and $
 \end{remark}
 
 \section*{R6. Diffusive null of the hedge cost}
+
+The comparison of hedged and unhedged carry returns follows Jurek (2014), who reads the resulting ratio as an upper bound on the crash share. The proposition below quantifies the part of that ratio that arises without any crash premium; the statement and proof are the author's.
 
 Let the undiscounted put value with lognormal forward $G$ and volatility $\sigma$ be
 \[
@@ -100,29 +128,11 @@ By the mean value theorem, $p(Fe^{\lambda\tau})-p(F)=-\Phi(-d_+(\xi))\,F(e^{\lam
 With no crash premium at all, hedging with a put of forward delta $-\Phi(-d_1)$ surrenders approximately that fraction of the carry premium: about $0.25$ for a $25\Delta$ put and $0.10$ for a $10\Delta$ put. This is the null against which the realised ratio $\theta_{UB}$ and the skew component of E3 are read.
 \end{remark}
 
-\section*{R1. Domestic and foreign risk-neutral measures}
-
-Let $(\Omega,\mathcal F,(\mathcal F_t)_{t\in[0,T]},\Q^d)$ satisfy the usual conditions, let $B^d,B^f$ be strictly positive adapted money-market accounts with $B^d_0=B^f_0=1$, and let $S>0$ be adapted and c\`adl\`ag. Assume $Z_t=S_tB^f_t/(S_0B^d_t)$ is a true $\Q^d$-martingale and define $d\Q^f/d\Q^d=Z_T$ on $\mathcal F_T$.
-
-\begin{proposition}
-(a) $\Q^f$ is a probability measure equivalent to $\Q^d$. (b) For $\mathcal F_T$-measurable $X\ge0$ or $X\in L^1(\Q^f)$, $\E^{\Q^f}[X\mid\mathcal F_t]=\E^{\Q^d}[Z_TX\mid\mathcal F_t]/Z_t$. (c) An adapted process $Y$ with $Y_t\in L^1(\Q^f)$ is a $\Q^f$-martingale if and only if $ZY$ is a $\Q^d$-martingale; in particular a foreign price $V^f$ satisfies: $V^f/B^f$ is a $\Q^f$-martingale if and only if $SV^f/B^d=S_0Z\,(V^f/B^f)$ is a $\Q^d$-martingale. (d) If $dS_t/S_t=(r_d-r_f)\,dt+\sigma\,dW_t$ under $\Q^d$ with constant coefficients, then $W^f_t=W_t-\sigma t$ is a $\Q^f$-Brownian motion, $d(1/S_t)=(1/S_t)[(r_f-r_d)\,dt-\sigma\,dW^f_t]$, and $\E^{\Q^d}S_T=F$, $\E^{\Q^f}(1/S_T)=1/F$ with $F=S_0e^{(r_d-r_f)T}$.
-\end{proposition}
-
-\begin{proof}
-(a) $Z_T>0$ and $\E^{\Q^d}Z_T=Z_0=1$, so $\Q^f$ is a probability measure; positivity of $Z_T$ gives equivalence. (b) For $\mathcal F_t$-measurable $Y\ge0$, the tower property and the martingale property give $\E^{\Q^f}Y=\E^{\Q^d}[Z_TY]=\E^{\Q^d}[Z_tY]$. For $A\in\mathcal F_t$,
-\[
-\E^{\Q^f}[X\mathbf 1_A]=\E^{\Q^d}\bigl[\E^{\Q^d}[Z_TX\mid\mathcal F_t]\mathbf 1_A\bigr]=\E^{\Q^f}\Bigl[\frac{\E^{\Q^d}[Z_TX\mid\mathcal F_t]}{Z_t}\mathbf 1_A\Bigr],
-\]
-which characterises the conditional expectation. (c) Apply (b) on $[s,t]$: $\E^{\Q^f}[Y_t\mid\mathcal F_s]=\E^{\Q^d}[Z_tY_t\mid\mathcal F_s]/Z_s$, so $Y$ is a $\Q^f$-martingale exactly when $\E^{\Q^d}[Z_tY_t\mid\mathcal F_s]=Z_sY_s$. (d) Here $Z_t=\exp(\sigma W_t-\sigma^2t/2)$, so Girsanov's theorem gives the first claim, and It\^o's formula for $1/S$ gives the dynamics. The expectations follow from the lognormal law under each measure.
-\end{proof}
-
-\begin{remark}
-Jensen's inequality gives $\E^{\Q^d}(1/S_T)>1/\E^{\Q^d}S_T=1/F$. There is no contradiction with (d): the foreign investor's forward price is an expectation under $\Q^f$, not $\Q^d$ (Siegel's paradox). If $Z$ is only a strict local martingale, $\E Z_T<1$ and the construction fails (Carr, Fisher and Ruf, 2014).
-\end{remark}
-
 \section*{R7. Entropy decomposition of currency premia}
 
-Fix $t$ and write $\E_t$ for $\E[\cdot\mid\mathcal F_t]$. For a positive random variable $M$ with $\E_t|\log M|<\infty$, the conditional entropy is $L_t(M)=\log\E_tM-\E_t\log M\ge0$. Let $M,M^*>0$ be $\mathcal F_{t+1}$-measurable discount factors in $L^2$ that price domestic and foreign payoffs in their own currencies, with $\E_tM=e^{-r_t}$, $\E_tM^*=e^{-r^*_t}$, $\E_t|\log M|,\E_t|\log M^*|<\infty$ and $MS_{t+1}/S_t\in L^2$, where $S$ is the domestic price of foreign currency. Write $m=\log M$, $\Delta s=\log(S_{t+1}/S_t)$, and $x_t=(f_t-s_t)-(r_t-r^*_t)$ for the covered-interest-parity basis.
+The relation between the exchange rate and the two pricing kernels is that of Backus, Foresi and Telmer (2001). Conditional entropy, its cumulant expansion and the entropy bound are as in Backus, Chernov and Zin (2014), who relate the bound to Bansal and Lehmann (1997) and Alvarez and Jermann (2005). The combination below, including the covered-interest-parity term, is derived here.
+
+Fix $t$ and write $\E_t$ for $\E[\cdot\mid\mathcal F_t]$. For a positive random variable $M$ with $\E_t|\log M|<\infty$, the conditional entropy is $L_t(M)=\log\E_tM-\E_t\log M\ge0$. Let $M,M^*>0$ be $\mathcal F_{t+1}$-measurable discount factors in $L^2$ that price domestic and foreign payoffs in their own currencies, with $\E_tM=e^{-r_t}$, $\E_tM^*=e^{-r^*_t}$, $\E_t|\log M|,\E_t|\log M^*|<\infty$ and $MS_{t+1}/S_t\in L^2$, where $S$ is the domestic price of foreign currency. Write $m=\log M$, $\Delta s=\log(S_{t+1}/S_t)$, and $x_t=(f_t-s_t)-(r_t-r^*_t)$ for the covered-interest-parity basis (on which see Du, Tepper and Verdelhan, 2018).
 
 \begin{lemma}
 Suppose every foreign payoff $X^*\in L^2(\mathcal F_{t+1})$ is traded and priced consistently in both currencies, $S_t\E_t[M^*X^*]=\E_t[MS_{t+1}X^*]$. Then $M^*=MS_{t+1}/S_t$ almost surely.
@@ -141,11 +151,29 @@ Under the lemma's conclusion, (i) $\E_t[\Delta s+r^*_t-r_t]=L_t(M)-L_t(M^*)$ and
 \end{proof}
 
 \begin{remark}
-The identity in (i) needs only that some pair of discount factors prices bonds and exchange rates consistently; completeness makes the pair unique. Complete markets imply cross-country discount-factor correlations that are hard to reconcile with consumption data (Brandt, Cochrane and Santa-Clara, 2006). Options on $S$ reveal the risk-neutral law of $\Delta s=m^*-m$, not the separate cumulants of $m$ and $m^*$, so they constrain but do not identify the split of $L_t(M)-L_t(M^*)$ across cumulant orders. Part (iii) is the entropy bound of Bansal and Lehmann (1997); hedged and unhedged carry returns bound the same $L_t(M)$.
+The identity in (i) needs only that some pair of discount factors prices bonds and exchange rates consistently; completeness makes the pair unique. Brandt, Cochrane and Santa-Clara (2006) show that the smoothness of exchange rates relative to the volatility of marginal utility implied by equity premia requires a very high degree of international risk sharing. Options on $S$ reveal the risk-neutral law of $\Delta s=m^*-m$, not the separate cumulants of $m$ and $m^*$, so they constrain but do not identify the split of $L_t(M)-L_t(M^*)$ across cumulant orders. Hedged and unhedged carry returns give two lower bounds on the same $L_t(M)$ through (iii).
 \end{remark}
 
 \section*{Results still to be written}
 
 R3, R4, R5(c), R8 and the Garman--Kohlhagen PDE, as stated in \texttt{theory/README.md}.
+
+\section*{References}
+\begin{list}{}{\leftmargin=1.5em \itemindent=-1.5em \itemsep=2pt \parsep=0pt}\small
+\item Alvarez, F. and Jermann, U. J. (2005). Using asset prices to measure the persistence of the marginal utility of wealth. \emph{Econometrica} 73(6), 1977--2016.
+\item Backus, D., Chernov, M. and Zin, S. (2014). Sources of entropy in representative agent models. \emph{Journal of Finance} 69(1), 51--99.
+\item Backus, D. K., Foresi, S. and Telmer, C. I. (2001). Affine term structure models and the forward premium anomaly. \emph{Journal of Finance} 56(1), 279--304.
+\item Bansal, R. and Lehmann, B. N. (1997). Growth-optimal portfolio restrictions on asset pricing models. \emph{Macroeconomic Dynamics} 1(2), 333--354.
+\item Brandt, M. W., Cochrane, J. H. and Santa-Clara, P. (2006). International risk sharing is better than you think, or exchange rates are too smooth. \emph{Journal of Monetary Economics} 53(4), 671--698.
+\item Breeden, D. T. and Litzenberger, R. H. (1978). Prices of state-contingent claims implicit in option prices. \emph{Journal of Business} 51(4), 621--651.
+\item Carr, P., Fisher, T. and Ruf, J. (2014). On the hedging of options on exploding exchange rates. \emph{Finance and Stochastics} 18(1), 115--144.
+\item Du, W., Tepper, A. and Verdelhan, A. (2018). Deviations from covered interest rate parity. \emph{Journal of Finance} 73(3), 915--957.
+\item Gatheral, J. and Jacquier, A. (2014). Arbitrage-free SVI volatility surfaces. \emph{Quantitative Finance} 14(1), 59--71.
+\item Geman, H., El Karoui, N. and Rochet, J.-C. (1995). Changes of num\'eraire, changes of probability measure and option pricing. \emph{Journal of Applied Probability} 32(2), 443--458.
+\item Jurek, J. W. (2014). Crash-neutral currency carry trades. \emph{Journal of Financial Economics} 113(3), 325--347.
+\item Reiswich, D. and Wystup, U. (2012). FX volatility smile construction. \emph{Wilmott} 2012(60), 58--69. Version consulted: CPQF Working Paper No.~20, version 2, Frankfurt School of Finance \& Management, 20 March 2010.
+\item Sampford, M. R. (1953). Some inequalities on Mill's ratio and related functions. \emph{Annals of Mathematical Statistics} 24(1), 130--132.
+\item Shreve, S. E. (2004). \emph{Stochastic Calculus for Finance II: Continuous-Time Models}. Springer.
+\end{list}
 
 \end{document}

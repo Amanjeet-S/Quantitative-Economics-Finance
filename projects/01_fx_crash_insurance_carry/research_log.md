@@ -22,8 +22,21 @@
 - **Clarification: extended sample.** The rule requires the calibration set only (ATM, 25Δ risk reversal, 25Δ butterfly) plus forward points. 10Δ quotes are used for the fit test where available. This was recorded before any estimate was computed.
 - **Extended-sample quality.** Fenics quotes before 2010 update infrequently, and butterflies in particular are often unchanged for weeks. Extended-sample results are therefore secondary evidence. The stale-butterfly robustness run applies to them, and the long ATM sample is used alongside them for 2008.
 - **USD deposit rate added.** `USD1MD=` was added to the catalogue so that the forward-point check compares deposit rates with deposit rates. OIS RICs do not exist for EUR and SEK; deposit rates are primary for all currencies, as designed.
-- **Remaining for Stage 1:**
-  - check 6 (delta and premium conventions from provider documentation);
-  - check 7 (the butterfly convention);
-  - a second retrieval to check for quote revisions;
-  - the snapshot time of daily history.
+- **Remaining for Stage 1** at that point: checks 6 and 7, a second retrieval to check for quote revisions, and the snapshot time of daily history.
+
+## 2026-09-24
+
+- **Snapshot time.** Daily history was matched against intraday bars over windows in January, March and August to September 2026. The composite daily value corresponds to about 21:18 UTC in both summer and winter, that is, a fixed UTC time rather than a New York local close. The Fenics daily value corresponds to about 17:16 London time. Option payoffs and month-end alignment use these times; the sensitivity check in the design (same-day and previous-day close) is unchanged.
+- **Check 6 (conventions).** The instrument metadata name only the quote type and the delta. LSEG's surface-construction documentation gives defaults for its own surfaces (spot delta, premium-adjusted) but does not define the contributed quotes. Delta and premium conventions therefore follow market convention (Clark, 2011; Reiswich and Wystup, 2010), as configured.
+- **Check 7 (butterfly reading).** Provider documentation is silent. Under the pre-registered order of evidence, the market-strangle reading is primary. The supporting diagnostic points the other way: across the primary sample, smiles calibrated under the smile-strangle reading predict the held-out 10Δ butterflies better in most month-ends and every currency, with small absolute differences. This is recorded as evidence against the primary reading. E4, which recomputes E1 and the skew term of E3 under the smile-strangle reading, is therefore reported alongside the primary results, not as a footnote.
+- **Stage 2 (panel calibration).** Every month-end smile in the primary sample was calibrated under both readings: all converged, with residuals below 1e-13 and all smiles free of static arbitrage within ±4 and ±10 ATM standard deviations. Counts and diagnostics are in the private results. Stage 2's completion criterion is met.
+- **Bug fixed during calibration.** The market-strangle butterfly bracket in `quotes_from_smile` could test a negative strangle volatility for low-volatility pairs, which sent the premium-adjusted delta maximiser into an unbounded loop. Volatility is now validated, bracket expansions are bounded and the butterfly bracket keeps σ_ATM + BF positive. Regression tests were added. The delta-to-strike search now brackets locally before scanning and evaluates the smile on the whole grid at once.
+- **Remaining for Stage 1:** a second retrieval to check for quote revisions.
+- **Citations verified.** Every cited source was checked for its bibliographic details (Crossref, OpenAlex, JSTOR, Project Euclid, publisher pages). Each specific claim attributed to a source was checked against the text, and [references.md](references.md) records what each source is used for and which version was read. Corrections made:
+  - The entropy bound is attributed jointly to Bansal and Lehmann (1997) and Alvarez and Jermann (2005), as stated in Backus, Chernov and Zin (2014).
+  - The remark on strict-local-martingale exchange rates now states that the foreign measure exists but is not equivalent (Carr, Fisher and Ruf, 2014).
+  - Brandt, Cochrane and Santa-Clara (2006) are cited for a risk-sharing index, not a correlation.
+  - Delta conventions are cited to Reiswich and Wystup (2012), whose working-paper version was read, and Clark (2011) only as reported there.
+  - Brunnermeier, Nagel and Pedersen is dated 2008 (NBER Macroeconomics Annual 2008).
+  - The bootstrap conditions are cited to the technical-report version of Politis and Romano.
+- **Deviation (before any inference was run): HAC bandwidth.** The design stated a Newey–West lag of ⌊4(T/100)^{2/9}⌋ and attributed it to Newey and West (1994). In that paper this quantity is the pilot truncation of an automatic procedure whose bandwidth is ⌊γ̂ T^{1/3}⌋; using the pilot value directly as the lag is a software convention. The design now uses the full automatic procedure. No standard error had been computed under the earlier rule.

@@ -1,6 +1,6 @@
 # Data plan
 
-This plan specifies what is acquired, from where, how it is stored and how it is audited. Sample rules are in the [research design](research_design.md). Coverage dates and counts that result from the audit are LSEG-derived. They are kept in `data/private/` until the [publication-rights review](../../docs/publication_rights.md) clears them.
+This plan specifies what is acquired, from where, how it is stored and how it is audited. Sample rules are in the [research design](research_design.md). Coverage dates and counts that result from the audit are LSEG-derived. They are kept in `data/private/` until the licence terms for publication are confirmed.
 
 ## Sources
 
@@ -36,7 +36,7 @@ Access is through the LSEG Data Library for Python (desktop session), using the 
 
 Each public snapshot is stored under `data/public/<source>/<date>/` with its original bytes, URL, retrieval time, SHA-256 hash and licence note.
 
-**Open question.** The provider does not document the snapshot time of daily history (London or New York close). The answer matters for aligning month-ends and for option payoffs, and is recorded in the research log once established.
+**Snapshot time.** The provider does not document the time of day of daily history. Matching daily values against intraday bars (summer and winter 2026) places the composite daily value at about 21:18 UTC throughout the year and the Fenics value at about 17:16 London time. The research log records the method; month-end alignment uses these times.
 
 ## Storage and provenance
 
@@ -66,7 +66,7 @@ data/private/audit/<retrieval-date>/
    - Units: volatility points, or forward points and their pip factor.
    - The sign convention of risk reversals.
    - Whether 10Δ instruments share the 25Δ conventions.
-6. **Delta and premium conventions.** Documented per pair, with the source of each convention (provider documentation where available, otherwise Clark, 2011, and Reiswich and Wystup, 2010).
+6. **Delta and premium conventions.** Documented per pair, with the source of each convention (provider documentation where available, otherwise Reiswich and Wystup, 2012, which reports the conventions table of Clark, 2011).
 7. **Butterfly convention.**
    - Provider documentation first.
    - The supporting diagnostic calibrates the 25Δ smile under each reading and compares the absolute errors in predicting the 10Δ risk reversal and butterfly. It uses the primary sample's month-ends.
