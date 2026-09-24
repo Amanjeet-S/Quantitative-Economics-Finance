@@ -21,7 +21,7 @@
 - **Conventions confirmed.** Every volatility instrument, including NOK and SEK, is quoted against USD, so no triangulation is needed. Provider scaling factors confirm the configured pip factors. Risk reversals are call minus put on the quoted pair, and the 10Δ quotes follow the same convention.
 - **Clarification: extended sample.** The rule requires the calibration set only (ATM, 25Δ risk reversal, 25Δ butterfly) plus forward points. 10Δ quotes are used for the fit test where available. This was recorded before any estimate was computed.
 - **Extended-sample quality.** Fenics quotes before 2010 update infrequently, and butterflies in particular are often unchanged for weeks. Extended-sample results are therefore secondary evidence. The stale-butterfly robustness run applies to them, and the long ATM sample is used alongside them for 2008.
-- **USD deposit rate added.** `USD1MD=` was added to the catalogue so that the forward-point check compares deposit rates with deposit rates. OIS RICs do not exist for EUR and SEK; deposit rates are primary for all currencies, as designed.
+- **USD deposit rate added.** `USD1MD=` was added to the catalogue so that the forward-point check compares deposit rates with deposit rates. OIS RICs do not exist for EUR and SEK. (Corrected on 24 September: USD discounting uses Fed Funds OIS as designed; the other currencies use deposit rates. See the entry of that date.)
 - **Remaining for Stage 1** at that point: checks 6 and 7, a second retrieval to check for quote revisions, and the snapshot time of daily history.
 
 ## 2026-09-24
@@ -40,3 +40,16 @@
   - Brunnermeier, Nagel and Pedersen is dated 2008 (NBER Macroeconomics Annual 2008).
   - The bootstrap conditions are cited to the technical-report version of Politis and Romano.
 - **Deviation (before any inference was run): HAC bandwidth.** The design stated a Newey–West lag of ⌊4(T/100)^{2/9}⌋ and attributed it to Newey and West (1994). In that paper this quantity is the pilot truncation of an automatic procedure whose bandwidth is ⌊γ̂ T^{1/3}⌋; using the pilot value directly as the lag is a software convention. The design now uses the full automatic procedure. No standard error had been computed under the earlier rule.
+
+## 2026-09-24 (Stage 3)
+
+- **Stage 3 run.** E1, E4, the 25Δ comparison, the extended sample and the splice test were estimated as specified (`scripts/estimate_e1.py`; method record in [reports/e1.md](reports/e1.md)). The results are held in `data/private/results/` until the licence terms for publishing LSEG-derived findings are confirmed. The ATM comparison named in the design is identically zero by construction, so it is not reported.
+- **Independent review before the results were recorded.** A separate review of the estimand and inference code found no error affecting the primary estimates. An independent QuantLib rebuild of every leg agreed to machine precision, and the standard errors matched the R package sandwich exactly. It found five departures, all corrected before the final run; each had a negligible effect on the primary estimates:
+  - The extended sample now requires the calibration set only, as logged on 23 September.
+  - Option dates are built on the New York calendar, and volatility time is trade to expiry.
+  - Provider days-to-maturity is used where reported, and computed spot-to-delivery days otherwise, instead of a 30-day fallback.
+  - Currencies, not whole months, are excluded when inputs are missing; non-converged smiles are used and counted.
+  - The splice test compares skew costs leg by leg, including the pre-2013 overlap, instead of rows that held by construction.
+- **Deviation: discount rates.** The design allows OIS "where available" for non-USD currencies. The implementation uses one-month deposit rates for every non-USD currency, for consistency across currencies. Rates enter E1 only through the base-currency discount factor in spot delta. The review bounded the effect on that factor at about 0.1 per cent, which is negligible for the strikes.
+- **Supplementary analyses (post hoc).** Added after the first E1 results, because the series is highly persistent and its zero-rate distribution has a heavy right tail from months with very small forward discounts. With so few effective observations, the automatic Newey–West bandwidth is capped well below what the persistence would require, so the pre-registered intervals are likely too narrow. The additions, listed in [reports/e1.md](reports/e1.md), are reported alongside the pre-registered estimand and do not replace it.
+- **Next:** Stage 4 (portfolio returns, E2, E3 and E5).

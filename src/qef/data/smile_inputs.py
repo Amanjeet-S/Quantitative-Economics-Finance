@@ -5,10 +5,20 @@ one-month outright forward, the quote-currency one-month rate, discount
 factors and the five one-month volatility quotes, each selected under the
 five-business-day rule of the research design (section 4).
 
-Timing: DAYS_MAT of the forward is the spot-to-delivery period. The option
-expiry lies the spot lag before delivery, so trade-to-expiry is taken as
-DAYS_MAT calendar days, and volatility time is DAYS_MAT/365. Discounting
-from spot to delivery uses the money-market basis of the quote currency.
+Timing. Dates are built on the New York business calendar: spot is the
+trade date plus the spot lag (one business day for USDCAD, two otherwise),
+delivery is spot plus one calendar month under the modified-following rule,
+and expiry is delivery minus the spot lag. Volatility time is
+(expiry − trade)/365. Discounting from spot to delivery uses DAYS_MAT of the
+forward where the provider reports it and the computed spot-to-delivery days
+otherwise (``days_source``), on the money-market basis of the quote currency.
+Currency-specific holidays are not applied, so dates can differ from market
+dates by a business day around non-US holidays.
+
+Completeness. ``complete_calib`` requires spot, forward, rate, ATM, 25Δ risk
+reversal and 25Δ butterfly (the calibration set; used for calibration and for
+the extended sample). ``has_10d`` records the 10Δ quotes, and ``complete``
+requires both (the primary-sample rule).
 """
 
 from __future__ import annotations
@@ -19,11 +29,26 @@ import numpy as np
 import pandas as pd
 
 from ..fx.conventions import G10
-from .panel import read_raw, sample_month_ends
+from .panel import NewYorkCalendar, read_raw, sample_month_ends
 
 VOL_BLOCKS = {"atm": ("vol_atm", "O"), "rr25": ("vol_rr25", "RR"), "bf25": ("vol_bf25", "BF"),
               "rr10": ("vol_rr10", "R10"), "bf10": ("vol_bf10", "B10")}
 MM_BASIS = {"USD": 360, "JPY": 360, "CHF": 360, "CAD": 365, "NOK": 360, "SEK": 360}
+SPOT_LAG = {"CAD": 1}
+CALIB_FIELDS = ("spot", "fwd", "rate", "atm", "rr25", "bf25")
+
+
+def option_dates(trade: pd.Timestamp, currency: str, months: int = 1):
+    """Spot, delivery and expiry dates on the New York business calendar."""
+    bday = pd.offsets.CustomBusinessDay(calendar=NewYorkCalendar())
+    lag = SPOT_LAG.get(currency, 2)
+    spot = trade + lag * bday
+    target = spot + pd.DateOffset(months=months)
+    delivery = target if bday.is_on_offset(target) else target + bday
+    if delivery.month != target.month:  # modified following
+        delivery = target - bday
+    expiry = delivery - lag * bday
+    return spot, delivery, expiry
 
 
 def _rate_ric(quote_ccy: str) -> tuple[str, str]:
@@ -56,8 +81,12 @@ def build_month_end_inputs(raw_root, month_ends, currencies=None, contributor: s
         out["currency"] = ccy
         out["S"] = spot["mid"].to_numpy()
         out["F"] = out["S"] + fwd["mid"].to_numpy() * conv.pip_factor
-        out["days"] = np.where(np.isfinite(days) & (days > 0), days, 30.0)
-        out["tau"] = out["days"] / 365.0
+        dates = [option_dates(t, ccy) for t in out.index]
+        computed = np.array([(dl - sp).days for sp, dl, _ in dates], dtype=float)
+        reported = np.isfinite(days) & (days > 0)
+        out["days"] = np.where(reported, days, computed)
+        out["days_source"] = np.where(reported, "DAYS_MAT", "calendar")
+        out["tau"] = np.array([(ex - t).days for t, (_, _, ex) in zip(out.index, dates)], dtype=float) / 365.0
         out["r_quote"] = rate["mid"].to_numpy() / 100.0
         out["df_quote"] = 1.0 / (1.0 + out["r_quote"] * out["days"] / MM_BASIS[quote_ccy])
         out["df_base"] = out["F"] * out["df_quote"] / out["S"]
@@ -69,6 +98,8 @@ def build_month_end_inputs(raw_root, month_ends, currencies=None, contributor: s
             status[name] = sel["status"]
         st = pd.DataFrame(status, index=out.index)
         out["n_substituted"] = (st == "substituted").sum(axis=1).to_numpy()
-        out["complete"] = (st != "missing").all(axis=1).to_numpy()
+        out["complete_calib"] = (st[list(CALIB_FIELDS)] != "missing").all(axis=1).to_numpy()
+        out["has_10d"] = (st[["rr10", "bf10"]] != "missing").all(axis=1).to_numpy()
+        out["complete"] = out["complete_calib"] & out["has_10d"]
         frames.append(out.reset_index())
     return pd.concat(frames, ignore_index=True)

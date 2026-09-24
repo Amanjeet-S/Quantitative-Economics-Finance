@@ -24,7 +24,7 @@ Each month-end smile is converted into strikes and prices under market quoting c
 | [references.md](references.md) | Every source, what it is used for and the version consulted |
 | [reports/](reports/) | Audit record and results |
 
-**Status:** Stage 2 complete; Stage 1 complete except a quote-revision check. The LSEG panel is acquired and audited ([reports/data_audit.md](reports/data_audit.md)), and every month-end smile is calibrated and checked for static arbitrage ([reports/smile_calibration.md](reports/smile_calibration.md)). Stage 3 (E1 and E4) is next. No estimates of the research quantities yet.
+**Status:** Stage 3 complete (E1 and E4; [reports/e1.md](reports/e1.md)). Estimates are held privately until the licence terms for publishing LSEG-derived findings are confirmed. Stage 4 (portfolio returns, E2, E3, E5) is next; a quote-revision check remains from Stage 1.
 
 ## Reproduction
 

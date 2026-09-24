@@ -55,6 +55,16 @@ Every source cited in the project, what it is used for, and the version consulte
 | Farhi, E., Fraiberger, S. P., Gabaix, X., Rancière, R. and Verdelhan, A. (2009). Crash risk in currency markets. NBER Working Paper 15062 | Closest work | NBER landing page; content to be read before Stage 4 |
 | Kutuk, M. M. and van Wijnbergen, S. (2025). Carry trade and currency crash risk. CEPR Discussion Paper 20745 | Closest recent application of the hedged-versus-unhedged comparison; USD/TRY only | Tinbergen Institute Discussion Paper TI 2025-058/IV (1 October 2025), full text |
 
+## Software used as reference implementations
+
+| Software | Used for |
+| --- | --- |
+| Zeileis, A. and contributors. sandwich: Robust Covariance Matrix Estimators. R package version 3.1-3 (CRAN, 3 August 2026); functions `bwNeweyWest` and `NeweyWest`, source file `R/vcovHAC.R` | Constants and steps of the Newey and West (1994) bandwidth and the Bartlett weights in `src/qef/stats/hac.py` |
+| Sheppard, K. arch. Python package, main branch at commit 91a25ef (24 September 2026; latest release 8.0.0); function `optimal_block_length` in `arch/bootstrap/base.py` | Tuning caps of the Politis and White (2004) block length in `src/qef/stats/bootstrap.py` |
+| QuantLib 1.43 (Python bindings) | Independent cross-check of pricing, delta conventions, strike inversion and SABR (`tests/test_quantlib_crosscheck.py`) |
+
+The project's code is written independently; these packages were read or run to check formulas and constants, and no code is copied from them.
+
 ## Data and documentation
 
 | Source | Used for |

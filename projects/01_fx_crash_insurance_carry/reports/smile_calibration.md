@@ -5,7 +5,7 @@ Stage 2 panel calibration and Stage 1 check 7, run on the primary sample. This r
 ## Reproduction
 
 ```bash
-.venv/bin/python scripts/calibrate_smiles.py --retrieval-date 2026-09-23
+.venv/bin/python scripts/calibrate_smiles.py --start 2010-07-30 --end 2026-08-31
 ```
 
 ## Inputs

@@ -37,7 +37,7 @@ def _calibrate_currency(rows: pd.DataFrame) -> list[dict]:
     warm = {r: None for r in READINGS}
     for _, row in rows.sort_values("date").iterrows():
         base = {"currency": row.currency, "date": row.date}
-        if not row.complete:
+        if not row.complete_calib:
             out += [{**base, "reading": r, "status": "missing_input"} for r in READINGS]
             continue
         conv = G10[row.currency].delta
@@ -61,6 +61,9 @@ def _calibrate_currency(rows: pd.DataFrame) -> list[dict]:
                 rep = check_smile(sm.vol, row.F, row.tau, -width * sd, width * sd, n=2001)
                 rec[f"arb_ok_{label}"] = rep.convex_ok and rep.slope_bounds_ok and rep.density_ok
                 rec[f"min_g_{label}"] = rep.min_g
+            if not row.has_10d:
+                out.append(rec)
+                continue
             try:
                 _, rr10, bf10 = quotes_from_smile(sm, row.tau, conv, 0.10, row.df_base, reading)
                 rec.update(rr10_pred=rr10, bf10_pred=bf10, rr10_quote=row.rr10, bf10_quote=row.bf10,
@@ -109,19 +112,21 @@ def main():
     p.add_argument("--start", default="2013-05-31")
     p.add_argument("--end", default="2026-08-31")
     p.add_argument("--workers", type=int, default=9)
+    p.add_argument("--contributor", default="", help="volatility contributor suffix, e.g. FN for Fenics; empty for composite")
     args = p.parse_args()
     raw = ROOT / "data" / "private" / "lseg" / args.retrieval_date / "raw"
     out_dir = ROOT / "data" / "private" / "results" / args.retrieval_date
     out_dir.mkdir(parents=True, exist_ok=True)
     month_ends = ny_month_ends(args.start, args.end)
-    inputs = build_month_end_inputs(raw, month_ends)
-    inputs.to_csv(out_dir / "smile_inputs.csv", index=False)
+    inputs = build_month_end_inputs(raw, month_ends, contributor=args.contributor)
+    tag = f"_{args.contributor.lower()}" if args.contributor else ""
+    inputs.to_csv(out_dir / f"smile_inputs{tag}.csv", index=False)
     groups = [g for _, g in inputs.groupby("currency")]
     with ProcessPoolExecutor(max_workers=args.workers) as ex:
         records = [r for part in ex.map(_calibrate_currency, groups) for r in part]
     panel = pd.DataFrame(records)
-    panel.to_csv(out_dir / "smile_panel.csv", index=False)
-    (out_dir / "smile_diagnostic.md").write_text(summarise(panel))
+    panel.to_csv(out_dir / f"smile_panel{tag}.csv", index=False)
+    (out_dir / f"smile_diagnostic{tag}.md").write_text(summarise(panel))
     print(f"{len(panel)} calibrations written to {out_dir}")
 
 
