@@ -92,7 +92,9 @@ Results used in the [research design](../research_design.md). Every result marke
 - E^P(K − S_T)⁺ − E^Q(K − S_T)⁺ = −FλτΦ(−d₁) + o(λτ).
 - Hence θ₀ = Φ(−d₁) + O(λτ).
 
-**Proof.** Dominated convergence, together with ∂_F E(K − S_T)⁺ = −Φ(−d₁).
+**Source.** The leading-order form is stated by Farhi et al. (2015, Section 5.1, eqs. (8)–(9)). Jurek (2014) notes that an unlevered hedge gives up part of the diffusive premium. The exact mean-value form and the error bound are proved in notes.tex.
+
+**Proof.** Mean value theorem, with ∂_G p(G) = −Φ(−d₊(G)) for the undiscounted put.
 
 ## R7 (P). Entropy decomposition
 

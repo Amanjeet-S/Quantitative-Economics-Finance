@@ -97,7 +97,7 @@ The map $(K,\omega)\mapsto f''(K)(K-X(\omega))^+$ is jointly measurable. By Tone
 \end{proof}
 
 \begin{remark}
-For $f(x)=\ln(x/F)$, $f''(K)=-K^{-2}$, which gives the log contract $\E\ln(X/F)=-\int_0^F P(K)K^{-2}dK-\int_F^\infty C(K)K^{-2}dK$. For $f(x)=(\ln(x/F))^2$, $f''(K)=2(1+\ln(F/K))/K^2$, which changes sign at $K=eF$; the absolute-value condition in the proposition covers such weights. The moment contracts of Bakshi, Kapadia and Madan (2003) are of this type. Quotes observe $P$ and $C$ only between the $10\Delta$ strikes, so the tails of these integrals must be bounded (R4).
+For $f(x)=\ln(x/F)$, $f''(K)=-K^{-2}$, which gives the log contract $\E\ln(X/F)=-\int_0^F P(K)K^{-2}dK-\int_F^\infty C(K)K^{-2}dK$. For $f(x)=(\ln(x/F))^2$, $f''(K)=2(1+\ln(F/K))/K^2$, which changes sign at $K=eF$; the absolute-value condition in the proposition covers such weights. The moment contracts of Bakshi, Kapadia and Madan (2003, Theorem 1) are of this type; they expand around the spot price with a constant interest rate, whereas the contracts here are centred at the forward $F$. Quotes observe $P$ and $C$ only between the $10\Delta$ strikes, so the tails of these integrals must be bounded (R4).
 \end{remark}
 
 \section*{R4. Bounds on the unobserved tails}
@@ -195,7 +195,7 @@ In log-moneyness $k=\ln(K/F)$, $K\sigma'(K)=\partial\sigma/\partial k$, so the c
 
 \section*{R6. Diffusive null of the hedge cost}
 
-The comparison of hedged and unhedged carry returns follows Jurek (2014), who reads the resulting ratio as an upper bound on the crash share. The proposition below quantifies the part of that ratio that arises without any crash premium; the statement and proof are the author's.
+The comparison of hedged and unhedged carry returns follows Jurek (2014), who reads the resulting ratio as an upper bound on the crash share and notes that an unlevered option hedge also gives up part of the diffusive premium (working-paper version of August 2013, Section 2.2). Farhi et al. (2015, Section 5.1, eqs. (8)--(9)) state the leading-order version of the result below: a put of delta $\Delta_P$ leaves a fraction $1+\Delta_P$ of the Gaussian risk premium. The exact mean-value form and the error bound below are the author's.
 
 Let the undiscounted put value with lognormal forward $G$ and volatility $\sigma$ be
 \[
@@ -224,7 +224,7 @@ With no crash premium at all, hedging with a put of forward delta $-\Phi(-d_1)$ 
 
 The relation between the exchange rate and the two pricing kernels is that of Backus, Foresi and Telmer (2001). Conditional entropy, its cumulant expansion and the entropy bound are as in Backus, Chernov and Zin (2014), who relate the bound to Bansal and Lehmann (1997) and Alvarez and Jermann (2005). The combination below, including the covered-interest-parity term, is derived here.
 
-Fix $t$ and write $\E_t$ for $\E[\cdot\mid\mathcal F_t]$. For a positive random variable $M$ with $\E_t|\log M|<\infty$, the conditional entropy is $L_t(M)=\log\E_tM-\E_t\log M\ge0$. Let $M,M^*>0$ be $\mathcal F_{t+1}$-measurable discount factors in $L^2$ that price domestic and foreign payoffs in their own currencies, with $\E_tM=e^{-r_t}$, $\E_tM^*=e^{-r^*_t}$, $\E_t|\log M|,\E_t|\log M^*|<\infty$ and $MS_{t+1}/S_t\in L^2$, where $S$ is the domestic price of foreign currency. Write $m=\log M$, $\Delta s=\log(S_{t+1}/S_t)$, and $x_t=(f_t-s_t)-(r_t-r^*_t)$ for the covered-interest-parity basis (on which see Du, Tepper and Verdelhan, 2018).
+Fix $t$ and write $\E_t$ for $\E[\cdot\mid\mathcal F_t]$. For a positive random variable $M$ with $\E_t|\log M|<\infty$, the conditional entropy is $L_t(M)=\log\E_tM-\E_t\log M\ge0$. Let $M,M^*>0$ be $\mathcal F_{t+1}$-measurable discount factors in $L^2$ that price domestic and foreign payoffs in their own currencies, with $\E_tM=e^{-r_t}$, $\E_tM^*=e^{-r^*_t}$, $\E_t|\log M|,\E_t|\log M^*|<\infty$ and $MS_{t+1}/S_t\in L^2$, where $S$ is the domestic price of foreign currency. Write $m=\log M$, $\Delta s=\log(S_{t+1}/S_t)$, and $x_t=(f_t-s_t)-(r_t-r^*_t)$ for the covered-interest-parity basis. With exchange rates quoted in foreign currency per USD, as in Du, Tepper and Verdelhan (2018; NBER Working Paper 23170, eq. (4)), $x_t$ is minus their basis.
 
 \begin{lemma}
 Suppose every foreign payoff $X^*\in L^2(\mathcal F_{t+1})$ is traded and priced consistently in both currencies, $S_t\E_t[M^*X^*]=\E_t[MS_{t+1}X^*]$. Then $M^*=MS_{t+1}/S_t$ almost surely.
@@ -309,12 +309,13 @@ $0\le c\le Se^{-r_f(T-t)}$, and $c(t,S)\to(S-K)^+$ as $t\uparrow T$, locally uni
 \item Breeden, D. T. and Litzenberger, R. H. (1978). Prices of state-contingent claims implicit in option prices. \emph{Journal of Business} 51(4), 621--651.
 \item Carr, P., Fisher, T. and Ruf, J. (2014). On the hedging of options on exploding exchange rates. \emph{Finance and Stochastics} 18(1), 115--144.
 \item Carr, P. and Madan, D. (2001). Towards a theory of volatility trading. In E. Jouini, J. Cvitani\'c and M. Musiela (eds), \emph{Option Pricing, Interest Rates and Risk Management}, Cambridge University Press, 458--476.
-\item Du, W., Tepper, A. and Verdelhan, A. (2018). Deviations from covered interest rate parity. \emph{Journal of Finance} 73(3), 915--957.
+\item Du, W., Tepper, A. and Verdelhan, A. (2018). Deviations from covered interest rate parity. \emph{Journal of Finance} 73(3), 915--957. Version consulted: NBER Working Paper 23170, February 2017.
+\item Farhi, E., Fraiberger, S. P., Gabaix, X., Ranci\`ere, R. and Verdelhan, A. (2015). Crash risk in currency markets. Working paper, version of 12 March 2015, SSRN 1397668; first issued as NBER Working Paper 15062 (2009).
 \item Garman, M. B. and Kohlhagen, S. W. (1983). Foreign currency option values. \emph{Journal of International Money and Finance} 2(3), 231--237.
 \item Gatheral, J. and Jacquier, A. (2014). Arbitrage-free SVI volatility surfaces. \emph{Quantitative Finance} 14(1), 59--71.
 \item Geman, H., El Karoui, N. and Rochet, J.-C. (1995). Changes of num\'eraire, changes of probability measure and option pricing. \emph{Journal of Applied Probability} 32(2), 443--458.
 \item Hagan, P. S., Kumar, D., Lesniewski, A. S. and Woodward, D. E. (2002). Managing smile risk. \emph{Wilmott Magazine}, 84--108.
-\item Jurek, J. W. (2014). Crash-neutral currency carry trades. \emph{Journal of Financial Economics} 113(3), 325--347.
+\item Jurek, J. W. (2014). Crash-neutral currency carry trades. \emph{Journal of Financial Economics} 113(3), 325--347. Version consulted for Section 2.2: SSRN 1262934, August 2013.
 \item Reiswich, D. and Wystup, U. (2012). FX volatility smile construction. \emph{Wilmott} 2012(60), 58--69. Version consulted: CPQF Working Paper No.~20, version 2, Frankfurt School of Finance \& Management, 20 March 2010.
 \item Sampford, M. R. (1953). Some inequalities on Mill's ratio and related functions. \emph{Annals of Mathematical Statistics} 24(1), 130--132.
 \item Shreve, S. E. (2004). \emph{Stochastic Calculus for Finance II: Continuous-Time Models}. Springer.

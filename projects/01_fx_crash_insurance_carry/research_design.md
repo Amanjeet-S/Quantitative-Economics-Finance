@@ -12,7 +12,7 @@ Carry investors earn the interest differential. They lose when high-yielding cur
 
 E_t[s_{t+1} − f_t] = L_t(M) − L_t(M*) − x_t,
 
-where L_t(M) = log E_t M − E_t log M is conditional entropy and x_t is the covered-interest-parity basis (theory result R7; on the basis itself, Du, Tepper and Verdelhan, 2018). Entropy is a sum of cumulants of log marginal utility, so crash risk enters through cumulants of order three and above.
+where L_t(M) = log E_t M − E_t log M is conditional entropy and x_t is the covered-interest-parity basis (theory result R7). x_t is minus the basis of Du, Tepper and Verdelhan (2018), who quote exchange rates in foreign currency per USD. Entropy is a sum of cumulants of log marginal utility, so crash risk enters through cumulants of order three and above.
 
 Options on S identify the risk-neutral law of Δs = m* − m. They do not identify how the entropy difference divides across cumulant orders. The project therefore measures the price of the carry position's left-tail exposure. It does not measure the crash share of discount-factor entropy.
 
@@ -20,13 +20,13 @@ A residual premium after hedging can reflect diffusive risk, systemic risk that 
 
 **Closest work:**
 
-- Jurek (2014, *JFE*): crash-neutral carry, 1990–2012. Crash premia account for at most one third of carry returns.
+- Jurek (2014, *JFE*): crash-neutral carry; unhedged returns 1990–2012, option-hedged returns 1999–2012. Crash premia account for at most one third of carry returns.
 - Burnside et al. (2011, *RFS*).
 - Chernov, Graveline and Zviadadze (2018, *JFQA*).
 - Della Corte, Ramadorai and Sarno (2016, *JFE*).
 - Fan, Londono and Xiao (2022, *JFE*).
 - Choi and Suh (2022, *JIFMIM*).
-- Working papers: Farhi, Fraiberger, Gabaix, Rancière and Verdelhan (NBER WP 15062); Kutuk and van Wijnbergen (CEPR DP 20745, USD/TRY only).
+- Working papers: Farhi, Fraiberger, Gabaix, Rancière and Verdelhan (NBER WP 15062, 2009; SSRN version of 12 March 2015); Kutuk and van Wijnbergen (CEPR DP 20745, USD/TRY only).
 
 **Intended contribution:**
 
@@ -128,7 +128,7 @@ Report φ_t, its means in the zero-rate regime (primary start to December 2021) 
 
 Here σ̂^P is the annualised realised volatility of daily log spot changes over the previous 21 business days. R6 gives the diffusive null θ₀ ≈ Φ(−d₁).
 
-Report θ_UB = 1 − μ_H/μ_U. It is an upper bound in the sense of Jurek (2014), it can take any real value, and it is compared with θ₀.
+Report θ_UB = 1 − μ_H/μ_U. It can take any real value. It bounds the crash share from above in the sense of Jurek (2014), but an unlevered hedge also gives up part of the diffusive premium, so it is compared with θ₀ (Farhi et al., 2015, state the leading-order form of θ₀).
 
 **E4.** Recompute E1 and E3(3) under the other butterfly reading.
 

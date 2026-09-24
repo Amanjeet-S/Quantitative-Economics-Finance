@@ -86,3 +86,19 @@
   - R8 (smoothness of the Hagan volatility for β = 1 and local well-posedness of the smile calibration by the implicit function theorem);
   - the Garman–Kohlhagen PDE (verification, and uniqueness among solutions of polynomial growth).
 - **Supporting checks on the panel.** The R5(c) condition holds over ±4 ATM standard deviations at every calibrated month-end, with a maximum of 0.76 against the bound of 1. Premium-adjusted deltas are monotone on the conventional branch everywhere. The Jacobian condition numbers confirm the non-singularity hypothesis of R8 at every calibration.
+
+## 2026-09-24 (Stage 5: sources and robustness)
+
+- **Sources read.** Brunnermeier, Nagel and Pedersen (2008), Burnside et al. (2011), Chernov, Graveline and Zviadadze (2018), Fan, Londono and Xiao (2022), Lustig, Roussanov and Verdelhan (2014) and Bakshi, Kapadia and Madan (2003) in full; Jurek (2014), Farhi et al., Della Corte, Ramadorai and Sarno (2016) and Du, Tepper and Verdelhan (2018) in working-paper or manuscript versions; Choi and Suh (2022) in abstract and introduction only. [references.md](references.md) records the version and sections of each.
+- **Corrections from the reading.**
+  - R6: Farhi et al. (version of 12 March 2015, Section 5.1) state the leading-order form of the diffusive null, and Jurek (2014) notes that an unlevered hedge gives up part of the diffusive premium. The notes had described R6 as the author's without qualification. They now credit both, and claim only the exact mean-value form and the error bound.
+  - Design, section 6: θ_UB is an upper bound in Jurek's sense only after allowing for the diffusive premium, so it is read against θ₀. The wording is corrected; the procedure is unchanged.
+  - Jurek's option-hedged sample is 1999–2012, not 1990–2012; 1990–2012 is his unhedged sample.
+  - Du, Tepper and Verdelhan quote foreign currency per USD, so x_t in R7 is minus their basis. The design and notes now say so.
+  - R3: the moment contracts of Bakshi, Kapadia and Madan expand around the spot price; the notes state that the R3 contracts are centred at the forward.
+- **Robustness grid.** `scripts/robustness.py` estimates every variant of design section 8 except the three-month tenor and vanna–volga smiles. The rules the design leaves open (stale-quote rule, exclusion windows, dollar-carry signal, the USD leg, log hedged returns, the out-of-sample training start) were fixed in the script before any variant was estimated. The base variant reproduces E1 and Stage 4. Results are in [reports/robustness.md](reports/robustness.md):
+  - φ is lower in the hiking regime in every variant; the difference is significant at 5% only in the ten-currency ranking, and the skew price per month does not change across regimes.
+  - The in-sample E2 slope survives every HML variant; the out-of-sample test does not reject in any variant when training starts in 2013.
+  - Quoted spreads remove most of the unhedged mean, and previous-day spot lowers the hedged mean by 3.1 bp.
+- **Implementation.** `option_dates` now builds the New York holiday table once; dates are unchanged and the tests pass. This reduced the grid's run time from ten minutes to under half a minute.
+- **Remaining for Stage 5:** the three-month tenor (needs three-month forwards and rates), vanna–volga smiles, and the R4 moment intervals.

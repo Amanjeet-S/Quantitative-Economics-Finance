@@ -36,11 +36,15 @@ VOL_BLOCKS = {"atm": ("vol_atm", "O"), "rr25": ("vol_rr25", "RR"), "bf25": ("vol
 MM_BASIS = {"USD": 360, "JPY": 360, "CHF": 360, "CAD": 365, "NOK": 360, "SEK": 360}
 SPOT_LAG = {"CAD": 1}
 CALIB_FIELDS = ("spot", "fwd", "rate", "atm", "rr25", "bf25")
+# Holidays are generated once; building the calendar inside the offset on every call is slow.
+_BDAY = pd.offsets.CustomBusinessDay(holidays=NewYorkCalendar().holidays("1990-01-01", "2040-12-31"))
 
 
 def option_dates(trade: pd.Timestamp, currency: str, months: int = 1):
-    """Spot, delivery and expiry dates on the New York business calendar."""
-    bday = pd.offsets.CustomBusinessDay(calendar=NewYorkCalendar())
+    """Spot, delivery and expiry dates on the New York business calendar (trade dates 1990 to 2040)."""
+    if not pd.Timestamp("1990-01-01") <= trade <= pd.Timestamp("2040-11-30"):
+        raise ValueError("trade date outside the holiday table")
+    bday = _BDAY
     lag = SPOT_LAG.get(currency, 2)
     spot = trade + lag * bday
     target = spot + pd.DateOffset(months=months)
