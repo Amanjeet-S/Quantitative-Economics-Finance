@@ -164,3 +164,19 @@ Recorded before any of the estimates below were computed.
   - The data plan and the calibration record said coverage facts were kept private, while the reports publish them. The policy is now stated consistently: coverage facts (sample windows, first available dates, counts) are published; quote values, month-level series and calibrated parameters are not.
 - **Safeguards.** `.gitignore` now excludes spreadsheet and binary data formats, and `tests/test_repository_hygiene.py` (run in CI) fails if a data extract, anything under `data/private/` or a notebook with stored outputs is tracked.
 - **Open.** Confirmation from the licence holder that pooled statistical summaries and coverage facts may be published.
+
+## 2026-09-25 (Stage 6: paper draft)
+
+- **Paper.** I drafted [paper/paper.tex](paper/paper.tex) (23 pages, main text 18) and [paper/summary.md](paper/summary.md). Three independent reviews followed: one for numbers and licence, one for citations and originality, and one referee review of the economics, inference and interpretation rules. Each finding was checked against the record before it was applied; 49 were applied and 9 rejected with reasons.
+- **Corrections to the reports found by the reviews.**
+  - The primary sample starts at the 31 May 2013 month-end, not June 2013. The 159 return month-ends run from May 2013 to July 2026, and the extended sample starts in January 2007. I corrected e1.md and stage4.md.
+  - The split of φ into C_skew and FD is a post hoc supplementary analysis. The E1 table and the reports now label it so.
+  - The skew term of E3 is an ex-ante premium, so its standard error measures time variation, not the precision of realised crash compensation. The reports no longer call it precisely estimated.
+  - e1.md listed supplementary analyses without their results; it now reports all of them.
+- **Added, post hoc.** Realised carry returns by regime. The unhedged mean is 7.4 bp per month before 2022 and 37.0 after, a difference of 29.6 bp (s.e. 23.8) that is not significant; the hedged difference is also not significant. Stage 4 report.
+- **Interpretation rule.** I require both the Newey–West and the bootstrap interval to exclude zero before an E1 difference counts as significant. This is my reading of the design's rule, stated as such in the paper.
+- **Open.**
+  - Attribute the test-inversion set for θ_UB to Fieller's method once the source is read.
+  - Clean-environment reproduction.
+  - The licence holder's confirmation on publishing pooled summaries.
+  - The validation checks not yet run: the published-portfolio comparison and the Merton and Heston checks of the moment code.
