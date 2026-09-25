@@ -152,3 +152,14 @@ Recorded before any of the estimates below were computed.
     - That setting is contradicted by the smile's own wings in about three quarters of currency-months, so the result is conditional supporting evidence only.
 - **Open.** USD3MOIS= is used as USD OIS at three months; the 24 September retrieval has no provider metadata confirming its description.
 - **Remaining:** the C++ kernel, the Stage 1 quote-revision check, and Stage 6.
+
+## 2026-09-25 (licence compliance audit)
+
+- **Trigger.** A review of LSEG's published guidance on derived data. LSEG's data-redistribution page treats an output as derived data if it is unrecognisable, non-reversible and cannot be traced back to the original content without exceptional effort. The London Stock Exchange market data policy (Schedule B, 2026) defines derived data as data that cannot be reverse engineered back to the data or used as a substitute for them. Both documents govern commercial and exchange licences, not the academic Workspace licence; the binding terms remain the licence holder's guidance (entry of 24 September). The principle agrees with the adopted policy: publish statistical summaries only.
+- **Audit.** Every tracked file and every commit in the history was examined for LSEG-derived content beyond statistical summaries. No data file and no path under `data/private/` has ever been tracked. Findings and actions:
+  - A regression-test fixture in `tests/test_smile.py` used rounded SABR parameters, a forward and a discount factor that match one calibrated currency-month. It is replaced by synthetic values, which reproduce the original failure on the code before the fix. The rounded values remain in the history of commit 94b338a, without the currency or date.
+  - A verbatim instrument-metadata label in this log is paraphrased.
+  - A single month-level value in the robustness report is replaced by a pooled statement.
+  - The data plan and the calibration record said coverage facts were kept private, while the reports publish them. The policy is now stated consistently: coverage facts (sample windows, first available dates, counts) are published; quote values, month-level series and calibrated parameters are not.
+- **Safeguards.** `.gitignore` now excludes spreadsheet and binary data formats, and `tests/test_repository_hygiene.py` (run in CI) fails if a data extract, anything under `data/private/` or a notebook with stored outputs is tracked.
+- **Open.** Confirmation from the licence holder that pooled statistical summaries and coverage facts may be published.

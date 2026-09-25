@@ -1,6 +1,6 @@
 # Data plan
 
-This plan specifies what is acquired, from where, how it is stored and how it is audited. Sample rules are in the [research design](research_design.md). Coverage dates and counts that result from the audit are LSEG-derived. They are kept in `data/private/` until the licence terms for publication are confirmed.
+This plan specifies what is acquired, from where, how it is stored and how it is audited. Sample rules are in the [research design](research_design.md). Quote values, month-level series and calibrated parameters are LSEG-derived and stay in `data/private/`. Coverage facts from the audit (sample windows, first available dates, counts and shares of stale, substituted or missing quotes) describe the dataset without revealing any value, and are published in the reports.
 
 ## Sources
 
