@@ -24,7 +24,7 @@ Each month-end smile is converted into strikes and prices under market quoting c
 | [references.md](references.md) | Every source, what it is used for and the version consulted |
 | [reports/](reports/) | Audit record and results |
 
-**Status:** Stages 1 to 4 complete. Stage 5: proofs complete; robustness grid complete except the three-month tenor and vanna–volga smiles. Results: [E1 and E4](reports/e1.md); [portfolio returns, E2, E3 and E5](reports/stage4.md); [robustness](reports/robustness.md). Remaining: the two robustness variants, R4 moment intervals, the C++ kernel, and the Stage 1 quote-revision check.
+**Status:** Stages 1 to 4 complete. Stage 5: proofs, the full robustness grid (including the three-month tenor and vanna–volga smiles) and the R4 moment intervals complete. Results: [E1 and E4](reports/e1.md); [portfolio returns, E2 (with the secondary moment predictors), E3 and E5](reports/stage4.md); [robustness](reports/robustness.md). Remaining: the C++ kernel, the Stage 1 quote-revision check, and Stage 6 (paper).
 
 ## Reproduction
 

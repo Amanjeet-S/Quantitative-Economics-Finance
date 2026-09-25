@@ -102,3 +102,53 @@
   - Quoted spreads remove most of the unhedged mean, and previous-day spot lowers the hedged mean by 3.1 bp.
 - **Implementation.** `option_dates` now builds the New York holiday table once; dates are unchanged and the tests pass. This reduced the grid's run time from ten minutes to under half a minute.
 - **Remaining for Stage 5:** the three-month tenor (needs three-month forwards and rates), vanna–volga smiles, and the R4 moment intervals.
+
+## 2026-09-24 (Stage 5: choices fixed before the remaining variants)
+
+Recorded before any of the estimates below were computed.
+
+- **Three-month data.** Three-month forward points and rates (USD3MOIS=, USD3MD=, USDSROIS3M=, and <CCY>3MD= for the nine currencies) were retrieved on 24 September 2026 into a separate private retrieval folder. Volatility quotes come from the 23 September retrieval.
+- **Three-month variant.**
+  - Rebalancing and returns: quarterly and non-overlapping, at calendar-quarter month-ends from June 2013.
+  - Discount rates: OIS for USD and deposits otherwise, as at one month.
+  - Legs and options: 3L/3S on the three-month forward discount, with protective options at the 10Δ strike of the three-month market-reading SABR smile.
+  - Estimands: E1, in-sample E2 and E3 as at one month.
+  - Supplementary: the two other quarterly phases are reported alongside.
+- **Vanna–volga variant.**
+  - Pillars: the ATM delta-neutral-straddle strike, and the 25Δ put and call strikes at the pillar volatilities in the pair's delta convention.
+  - Butterfly: under the market reading, the smile strangle is solved so that the vanna–volga smile prices the market strangle. Under the smile reading, the quote is used directly.
+  - Method: the primary vanna–volga method is chosen from the source reading before estimation. Months where a method is undefined at the 10Δ strikes are counted, not dropped silently.
+- **Option-implied moments (R4, secondary E2 predictors).**
+  - Measure: moments of log(X/F_X) under the USD forward measure; for USD-base pairs, prices are converted with the change of numeraire of R1.
+  - Integration: the calibrated smile between the 10Δ strikes, with R4 tail bounds beyond them.
+  - Tail exponents, two settings: (i) the local elasticities of the calibrated smile's density at the 10Δ strikes, which assumes the tails beyond the quotes are no heavier than at the quotes; (ii) γ = η = 2.
+  - Predictors: portfolio variance and oriented skewness, averaged over the E1 legs.
+  - Regressions: at the lower endpoint, midpoint and upper endpoint of each interval under setting (i). A conclusion is reported only if it holds at all three.
+
+## 2026-09-25 (Stage 5: vanna–volga, three-month tenor, moment intervals)
+
+- **Sources read for vanna–volga.** Castagna and Mercurio (2007; authors' post-review preprint), their working paper (September 2006 revision, compared with the January 2006 version), Bossens et al. (2010; arXiv v3) and Reiswich (2010, doctoral dissertation). Reiswich and Wystup (2012) was checked and does not treat vanna–volga. [references.md](references.md) records versions and locations.
+- **Choice fixed from the reading, before estimation.** The primary vanna–volga smile is the implied volatility of the vanna–volga price, not either approximation. The properties Castagna and Mercurio prove belong to the price. The first-order approximation overvalues the wings. The second-order approximation can be undefined. The approximations are computed as checks.
+- **Rule added in implementation.** A 10Δ strike on a vanna–volga smile must be connected to the ATM pillar through strikes where the smile is defined. Across an undefined region the delta map is not continuous. The rule is not from a source, and it does not bind for the price smile's strikes used in the variant.
+- **Independent review.** Each of the three pieces was reviewed separately after implementation, and confirmed defects were fixed before any result was recorded. None of the fixes changed an estimate.
+  - Vanna–volga:
+    - missing diagnostic flags had been counted as passes;
+    - the held-out comparison had included non-converged smiles;
+    - a citation range was wrong;
+    - the strike-set invariance test was missing.
+  - Three-month tenor:
+    - the holiday-table guard did not bound the delivery date;
+    - a reproduction command was missing.
+  - Moment intervals:
+    - a closed-form check had been applied outside its stated domain;
+    - a test case did not exercise the edge extremum it claimed to;
+    - one docstring statement was wrong.
+- **Results.** Vanna–volga and three-month results are in [reports/robustness.md](reports/robustness.md); the moment predictors are in [reports/stage4.md](reports/stage4.md).
+  - Vanna–volga: smiles leave E1, E2 and E3 unchanged, and fit the held-out 10Δ quotes better than SABR.
+  - Three-month tenor: it repeats the one-month pattern. φ falls in the hiking regime because the carry spread widens while the skew price is stable. The difference is significant under the bootstrap but not under Newey–West.
+  - Moment intervals:
+    - Under γ = η = 2 no skewness interval excludes zero, so truncated quotes do not identify skewness.
+    - Under the boundary-elasticity setting, oriented skewness predicts carry returns with the crash-compensation sign under the bootstrap at every endpoint.
+    - That setting is contradicted by the smile's own wings in about three quarters of currency-months, so the result is conditional supporting evidence only.
+- **Open.** USD3MOIS= is used as USD OIS at three months; the 24 September retrieval has no provider metadata confirming its description.
+- **Remaining:** the C++ kernel, the Stage 1 quote-revision check, and Stage 6.

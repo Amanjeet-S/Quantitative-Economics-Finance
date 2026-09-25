@@ -8,6 +8,7 @@ Stage 4 of the [research design](../research_design.md). Aggregate results only;
 .venv/bin/python scripts/estimate_stage4.py
 .venv/bin/python scripts/acquire_cboe_vx.py --retrieval-date 2026-09-24
 .venv/bin/python scripts/estimate_e5.py
+.venv/bin/python scripts/estimate_moments.py
 ```
 
 ## Returns
@@ -39,6 +40,36 @@ There are 116 out-of-sample forecasts. The correlation between the two predictor
 - **Out of sample.** The Clark–West statistic of 1.639 falls just short of the 5% one-sided critical value of 1.645, so predictability is not established.
 - **The risk reversal alone** predicts in sample but not out of sample.
 - **The regime-shift question.** The claim that crash-insurance pricing explains the regime shift requires the E1 difference, a bias-corrected b > 0 and an out-of-sample rejection. Only the second holds, so the evidence is reported as partial support.
+
+## E2, secondary predictors: option-implied variance and skewness
+
+The design treats option-implied variance and skewness as secondary predictors, reported as intervals because quotes stop at the 10Δ strikes (`src/qef/fx/moments.py`; theory results R1, R3, R4).
+
+**Construction.**
+- **Moments.** The moments are those of log(X_T/F_X) under the USD one-month forward measure. For USD-base pairs, quote-currency prices are converted with the change of numeraire of R1, E^USD h(S_T) = E^q[h(S_T) S_T/F].
+- **Spanning.** The contracts are spanned by out-of-the-money options (R3), adapted from Bakshi, Kapadia and Madan (2003) to contracts centred at the forward.
+- **Middle part.** Between the 10Δ strikes the contracts come from the calibrated smile, by composite Simpson's rule with the forward as a node. The step is halved until every contract changes by less than 1e-10 relative, which holds in all 1,440 currency-months.
+- **Tails.** Beyond the 10Δ strikes each contract is bounded by R4, with sign-changing weights split into positive and negative parts. Variance and skewness intervals are the exact ranges over the box of contract intervals.
+- **Tail exponents, two settings fixed before estimation.**
+  - Setting (i): the local elasticities of the smile's density at the 10Δ strikes (median γ = 61, η = 67). This assumes the tails beyond the quotes are no heavier than at the quotes.
+  - Setting (ii): γ = η = 2.
+- **Portfolio predictors.** Variance, and skewness oriented to each leg (sign reversed for short legs), both averaged over the six E1 legs.
+
+**Identification.**
+- **Setting (ii).** No currency-month or portfolio month has a skewness interval that excludes zero, and the variance interval is about fifty times wider than under (i). Truncated quotes therefore do not identify skewness without a tail assumption of the strength of (i).
+- **Setting (i).** The median currency-month skewness interval is [−0.70, 0.14], and 32% of intervals exclude zero.
+- **A caveat on setting (i).** The calibrated smile's own extrapolation contradicts assumption (i) in about three quarters of currency-months: its elasticity falls below the boundary value within two ATM standard deviations beyond the boundary. Setting (i) intervals are therefore conditional on an assumption the smile itself does not support.
+
+**Predictive regressions, setting (i).** HML^U_{t+1} on the predictor at the lower endpoint, midpoint and upper endpoint of its interval, over 159 months.
+
+| Predictor | b (lower, mid, upper) | Newey–West t | One-sided bootstrap p |
+| --- | --- | --- | --- |
+| Variance | 4.98, 4.81, 4.64 | 0.87, 0.90, 0.93 | 0.185, 0.171, 0.163 (b > 0) |
+| Oriented skewness | −0.024, −0.028, −0.028 | −2.74, −2.60, −1.87 | 0.013, 0.015, 0.045 (b < 0) |
+
+- **Variance.** It does not predict carry returns at any endpoint.
+- **Oriented skewness.** More negative oriented skewness, meaning more left-tail risk in the carry position, predicts higher returns: the crash-compensation sign, the same economic direction as the E2 test on φ. The one-sided bootstrap test rejects at 5% at all three endpoints; the Newey–West t does not at the upper endpoint.
+- **Reading.** The result holds across the interval only under the bootstrap, and only under setting (i), which the smile's own wings contradict. It is therefore reported as conditional supporting evidence, not as a finding.
 
 ## E3: decomposition of the hedge cost
 
