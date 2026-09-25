@@ -91,7 +91,7 @@
 
 - **Sources read.** Brunnermeier, Nagel and Pedersen (2008), Burnside et al. (2011), Chernov, Graveline and Zviadadze (2018), Fan, Londono and Xiao (2022), Lustig, Roussanov and Verdelhan (2014) and Bakshi, Kapadia and Madan (2003) in full; Jurek (2014), Farhi et al., Della Corte, Ramadorai and Sarno (2016) and Du, Tepper and Verdelhan (2018) in working-paper or manuscript versions; Choi and Suh (2022) in abstract and introduction only. [references.md](references.md) records the version and sections of each.
 - **Corrections from the reading.**
-  - R6: Farhi et al. (version of 12 March 2015, Section 5.1) state the leading-order form of the diffusive null, and Jurek (2014) notes that an unlevered hedge gives up part of the diffusive premium. The notes had described R6 as the author's without qualification. They now credit both, and claim only the exact mean-value form and the error bound.
+  - R6: Farhi et al. (version of 12 March 2015, Section 5.1) state the leading-order form of the diffusive null, and Jurek (2014) notes that an unlevered hedge gives up part of the diffusive premium. The notes had described R6 as my own without qualification. They now credit both, and claim only the exact mean-value form and the error bound.
   - Design, section 6: θ_UB is an upper bound in Jurek's sense only after allowing for the diffusive premium, so it is read against θ₀. The wording is corrected; the procedure is unchanged.
   - Jurek's option-hedged sample is 1999–2012, not 1990–2012; 1990–2012 is his unhedged sample.
   - Du, Tepper and Verdelhan quote foreign currency per USD, so x_t in R7 is minus their basis. The design and notes now say so.

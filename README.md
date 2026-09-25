@@ -26,6 +26,6 @@ python -m venv .venv
 .venv/bin/python -m pytest -q
 ```
 
-**Data licence.** The LSEG data used in this research were obtained by the author, Amanjeet Singh, under an LSEG Workspace student licence provided by the author's university. That licence covers the author only: it permits individual study and research and does not permit redistribution, so the repository contains no LSEG data. Anyone else who wants to rerun the acquisition and estimation needs their own LSEG Workspace licence; the data are acquired in a separate environment (`requirements-lseg.lock`).
+**Data licence.** I obtained the LSEG data used in this research under an LSEG Workspace student licence provided by my university. That licence covers only me: it permits individual study and research and does not permit redistribution, so this repository contains no LSEG data. Anyone else who wants to rerun the acquisition and estimation needs their own LSEG Workspace licence; the data are acquired in a separate environment (`requirements-lseg.lock`).
 
 The repository holds code, methods and aggregate results (means, standard errors, test statistics and intervals). It holds no month-level series or calibrated parameters from which quotes could be reconstructed; these stay in `data/private/`, which Git ignores. Coverage facts (sample windows, counts) are published because they reveal no values. `tests/test_repository_hygiene.py` fails if a data extract or anything under `data/private/` is ever tracked.

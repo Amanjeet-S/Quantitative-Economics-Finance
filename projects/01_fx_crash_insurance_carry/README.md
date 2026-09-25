@@ -33,7 +33,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.lock && .venv/bin/
 .venv/bin/python -m pytest -q
 ```
 
-Rerunning the LSEG acquisition requires the reader's own LSEG Workspace licence, not the author's, and uses a separate environment:
+Rerunning the LSEG acquisition requires the reader's own LSEG Workspace licence, not mine, and uses a separate environment:
 
 ```bash
 python -m venv .venv-lseg && .venv-lseg/bin/pip install -r requirements-lseg.lock
@@ -41,4 +41,4 @@ python -m venv .venv-lseg && .venv-lseg/bin/pip install -r requirements-lseg.loc
 .venv/bin/python scripts/audit_fx_panel.py
 ```
 
-The script reads the App Key of whoever runs it from `~/.lseg/app_key`. The author's data were obtained under an LSEG Workspace student licence provided by the author's university, which covers the author only, permits individual study and research and does not permit redistribution. The repository therefore holds code, methods and aggregate results (means, standard errors, test statistics and intervals). It holds no LSEG data and no month-level series or calibrated parameters from which quotes could be reconstructed; these stay in `data/private/`, which Git ignores.
+The script reads the App Key of whoever runs it from `~/.lseg/app_key`. I obtained my data under an LSEG Workspace student licence provided by my university, which covers only me, permits individual study and research and does not permit redistribution. The repository therefore holds code, methods and aggregate results (means, standard errors, test statistics and intervals). It holds no LSEG data and no month-level series or calibrated parameters from which quotes could be reconstructed; these stay in `data/private/`, which Git ignores.

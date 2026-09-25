@@ -4,8 +4,8 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Labels:**
 
-- **P:** proved here.
-- **P\*:** a standard result, proved here for completeness.
+- **P:** proved in notes.tex; the proof is mine.
+- **P\*:** a standard result, which I prove for completeness.
 - **C:** cited, with hypotheses stated.
 
 ## R1 (P\*). Domestic and foreign risk-neutral measures
@@ -83,7 +83,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **(c) (P)** For pips delta Δ_φ(K) = φ D Φ(φ d₊(K, σ(K))): if |∂σ/∂k| √τ |d₋| < 1 on an interval (k = ln(K/F)), Δ_φ is strictly decreasing there, so the smile delta-to-strike map is injective. The condition holds over ±4 ATM standard deviations at every calibrated month-end; premium-adjusted deltas are checked numerically.
 
-**Sources.** Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention; the proof of (b) is written here.
+**Sources.** Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention; the proof of (b) is mine.
 
 **Implementation.** `src/qef/fx/gk.py`.
 
