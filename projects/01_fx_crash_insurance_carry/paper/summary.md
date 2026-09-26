@@ -26,11 +26,11 @@ Partial support only, under the pre-registered rules.
 
 The evidence points to a rise in the forward-discount spread rather than a change in the price of crash insurance.
 
-## Contributions
+## What the paper adds
 
 - A decomposition of the realised cost of G10 crash insurance over 2013–2026, with a regime comparison of its ex-ante skew component, extending the option-hedged carry evidence of Jurek (2014).
-- A pre-registered test of whether the skew price explains the change in the carry premium; secondarily, the butterfly reading moves φ by under 4 per cent.
-- Theory: my combination of the entropy decompositions of Backus, Foresi and Telmer (2001) and Backus, Chernov and Zin (2014) with the covered-interest-parity basis; my tail bounds for moment contracts adapted from Bakshi, Kapadia and Madan (2003); my exact form and error bound for the diffusive null, whose leading-order form is due to Farhi et al. (2015).
+- A pre-registered test of whether the skew price explains the change in the carry premium; secondarily, the butterfly reading, whose two versions Bossens et al. (2010) show can differ markedly for skewed smiles, moves φ by under 4 per cent.
+- Theory: the currency-premium decomposition of Backus, Foresi and Telmer (2001), in the entropy form of Backus, Chernov and Zin (2014), restated with the covered-interest-parity basis as a wedge (as Lustig and Verdelhan, 2019, do with a general wedge); bounds on option-implied moments from truncated quotes under a stated tail condition, which are my own and extend the truncation bounds of Jiang and Tian (2005); and an exact form and error bound, my own, for the diffusive null whose leading-order form is due to Farhi et al. (2015).
 
 ## Limitations
 

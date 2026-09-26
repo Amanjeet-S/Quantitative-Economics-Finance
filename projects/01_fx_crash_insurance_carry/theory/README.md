@@ -4,8 +4,8 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Labels:**
 
-- **P:** proved in notes.tex; the proof is mine.
-- **P\*:** a standard result, which I prove for completeness.
+- **P:** proved in notes.tex; the part I claim as my own is stated in the result's sources, and the related literature is cited there.
+- **P\*:** a known result; notes.tex writes out the published or standard proof for completeness.
 - **C:** cited, with hypotheses stated.
 
 ## R1 (P\*). Domestic and foreign risk-neutral measures
@@ -27,7 +27,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Source.** Geman, El Karoui and Rochet (1995).
 
-## R2 (P). Arbitrage-free call prices
+## R2 (P\*). Arbitrage-free call prices
 
 **Statement.** c(K) = E(X − K)⁺ for some X ≥ 0 with E X = F if and only if:
 - c is convex,
@@ -43,7 +43,9 @@ Results used in the [research design](../research_design.md). Every result marke
 - On a grid: slopes in [−1, 0] and nondecreasing.
 - On total variance w(k): g(k) ≥ 0 (Gatheral and Jacquier, 2014).
 
-## R3 (P). Spanning
+**Sources.** Breeden and Litzenberger (1978); the characterisation and its proof through the right derivative and Fubini's theorem are in Föllmer and Schied (2004, Lemma 7.23).
+
+## R3 (P\*). Spanning
 
 **Hypotheses.**
 - f′ is locally absolutely continuous on (0, ∞).
@@ -54,9 +56,11 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Proof.** Taylor's theorem with integral remainder, then Fubini.
 
-**Sources.** Carr and Madan (1998); Bakshi, Kapadia and Madan (2003).
+**Sources.** Carr and Madan (1998) for the formula; the proof is the standard Taylor-remainder argument, written out with explicit integrability hypotheses; Bakshi, Kapadia and Madan (2003) for the moment contracts.
 
 ## R4 (P). Partial identification from truncated quotes
+
+**Sources.** Jiang and Tian (2005, Proposition 2 and Appendix) bound the truncation error of model-free implied variance beyond the quoted strikes; Lee (2004) links finite moments to the wings of implied variance. The power-type tail condition, the bounds for general and sign-changing weights and the resulting variance and skewness intervals are my own.
 
 **Tail bound.**
 - If Q(S_T ≤ K)/K^γ is nondecreasing on (0, K_min], then P(K) ≤ P(K_min)(K/K_min)^{γ+1} there.
@@ -75,7 +79,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **(a) Closed form.** For pips spot delta: K = F exp(σ²τ/2 − φσ√τ Φ⁻¹(|Δ|/D_b)).
 
-**(b) (P) Premium-adjusted call delta** h(K) = (K/F) D_b Φ(d₋):
+**(b) (P\*) Premium-adjusted call delta** h(K) = (K/F) D_b Φ(d₋):
 - h → 0 at both ends.
 - h′ has the sign of Φ(d₋) − φ(d₋)/(σ√τ).
 - Since φ/Φ is strictly decreasing, h is strictly increasing then strictly decreasing, with a unique maximiser K*.
@@ -83,7 +87,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **(c) (P)** For pips delta Δ_φ(K) = φ D Φ(φ d₊(K, σ(K))): if |∂σ/∂k| √τ |d₋| < 1 on an interval (k = ln(K/F)), Δ_φ is strictly decreasing there, so the smile delta-to-strike map is injective. The condition holds over ±4 ATM standard deviations at every calibrated month-end; premium-adjusted deltas are checked numerically.
 
-**Sources.** Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention; the proof of (b) is mine.
+**Sources.** Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention. Jäckel (2020, Section 2, eq. (20)) gives the single maximum through the inverse Mills ratio and the choice of the larger root, which is the argument written out for (b). Reiswich (2010, Section 3.8) shows that a smile delta can fail to be monotone; the sufficient condition in (c) is my own.
 
 **Implementation.** `src/qef/fx/gk.py`.
 
@@ -99,7 +103,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Proof.** Mean value theorem, with ∂_G p(G) = −Φ(−d₊(G)) for the undiscounted put.
 
-## R7 (P). Entropy decomposition
+## R7 (P\*). Entropy decomposition
 
 **Hypotheses.**
 - M, M* > 0 in L²(𝔽_{t+1}).
@@ -115,7 +119,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Entropy bound** (Bansal and Lehmann, 1997; Alvarez and Jermann, 2005; as stated in Backus, Chernov and Zin, 2014). E L_t(M) ≥ E[log R − log R_f] for funded returns R > 0.
 
-**Sources.** Backus, Foresi and Telmer (2001); Backus, Chernov and Zin (2014); Brandt, Cochrane and Santa-Clara (2006).
+**Sources.** Backus, Foresi and Telmer (2001, Proposition 1 and eqs. (9)–(13)) give the decomposition of the currency premium into the difference of the two kernels' log-expectation minus expectation-of-log terms and its cumulant expansion; Backus, Chernov and Zin (2014) for conditional entropy and the bound; Lustig and Verdelhan (2019) for the decomposition with a wedge; Jiang, Krishnamurthy and Lustig (2021) for the convenience yield inferred from the Treasury basis; Brandt, Cochrane and Santa-Clara (2006). Writing the covered-interest-parity basis into the identity is an elementary step of my own.
 
 ## R8 (P). Local well-posedness of the smile calibration
 
@@ -125,6 +129,8 @@ Results used in the [research design](../research_design.md). Every result marke
 - equality of the market-strangle premium under the smile and under the flat volatility σ_ATM + BF.
 
 **Statement.** If the Hagan volatility is smooth (a lemma for β = 1), the strike fixed points are non-degenerate (R5(c)) and the Jacobian is non-singular at a solution, the solution is locally unique and C¹ in the quotes (implicit function theorem, applied first to the strikes and then to the system).
+
+**Sources.** The implicit-function-theorem argument follows Reiswich (2010, Theorems 2 and 3, Appendices A and B), who uses it for the volatility-strike function and for the market-strangle calibration of a simplified parabolic smile. Its application to the three SABR equations, the smoothness lemma for β = 1 and conditions (i) to (iv) are my own.
 
 **Implementation.** `src/qef/fx/smile.py`, in the variables (ln α, atanh ρ, ln ν).
 
@@ -142,6 +148,6 @@ Results used in the [research design](../research_design.md). Every result marke
 
 ## Supporting derivation: the Garman–Kohlhagen PDE
 
-- (P) The Garman–Kohlhagen price solves the PDE with terminal condition (S − K)⁺ (direct verification).
+- (P\*) The Garman–Kohlhagen price solves the PDE with terminal condition (S − K)⁺ (direct verification; Garman and Kohlhagen, 1983; Shreve, 2004).
 - It is the unique C^{1,2} solution of polynomial growth that is continuous up to T (Feynman–Kac with localisation).
 - No boundary condition at S = 0 is needed, because the exchange rate never reaches zero.
