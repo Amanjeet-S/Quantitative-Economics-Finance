@@ -91,7 +91,7 @@ Terms are in basis points of notional per month (primary sample, 159 months, 10�
 | (iii) skew | −11.2 | 0.65 |
 
 - **Hedge-cost ratio.** θ_UB = 1 − mean(HML^H)/mean(HML^U) is 0.53 at 10Δ, 0.49 at 25Δ and 0.45 at ATM. The diffusive null of result R6 is θ₀ ≈ 0.10 at 10Δ: the average forward delta of the hedges.
-- **Confidence set.** The test-inversion 95% set for θ_UB is unbounded, because the mean unhedged carry return is not significantly different from zero in this sample (t = 1.47). As the design anticipated, the ratio is weakly identified, so no point value is claimed.
+- **Confidence set.** The test-inversion 95% set for θ_UB, Fieller's (1954) construction with a Newey–West variance, is unbounded, because the mean unhedged carry return is not significantly different from zero in this sample (t = 1.47). As the design anticipated, the ratio is weakly identified, so no point value is claimed.
 - **What the decomposition shows.** The hedged-minus-unhedged difference over 2013–2026 consists almost entirely of the skew term, which equals the ex-ante skew price of E1 carried to delivery. Term (iii) is the ex-ante skew premium, known at each month-end, so its small standard error reflects how little that premium varies over time, not the precision of realised crash compensation. The realised terms, the payoff term and the volatility-level term, are small and not distinguishable from zero.
 
 **Extended sample.** Fenics quotes, 2007–2013, 72 months. The unhedged mean is 8.4 bp (s.e. 62.7). Term (i) is 16.7 bp (s.e. 10.2), reflecting option payoffs in 2008, and the skew term is −22.3 bp (s.e. 3.0).

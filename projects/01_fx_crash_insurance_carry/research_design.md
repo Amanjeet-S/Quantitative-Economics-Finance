@@ -145,7 +145,7 @@ Report θ_UB after adjusting for these exposures.
 
 - Newey and West (1987) standard errors with a Bartlett kernel. The bandwidth follows the automatic procedure of Newey and West (1994): pilot truncation n = ⌊4(T/100)^{2/9}⌋, then bandwidth m = ⌊γ̂ T^{1/3}⌋.
 - Stationary bootstrap (Politis and Romano, 1994), with block length by Politis and White (2004) as corrected by Patton, Politis and White (2009), and 9,999 draws.
-- θ_UB by test inversion: CS = {θ₀ : |μ̂_H − (1 − θ₀)μ̂_U| ≤ 1.96 ŝe_HAC}. Unbounded sets are reported as unbounded (Dufour, 1997). Delta-method intervals are secondary.
+- θ_UB by test inversion: CS = {θ₀ : |μ̂_H − (1 − θ₀)μ̂_U| ≤ 1.96 ŝe_HAC}, the construction of Fieller (1954) for a ratio of means. Unbounded sets are reported as unbounded (Dufour, 1997). Delta-method intervals are secondary.
 - Stambaugh bias in E2 is assessed by residual bootstrap under the null.
 - E1 is the single primary estimand, so no multiple-testing adjustment is made.
 

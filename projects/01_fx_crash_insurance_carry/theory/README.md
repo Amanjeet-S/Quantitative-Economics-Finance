@@ -144,7 +144,7 @@ Results used in the [research design](../research_design.md). Every result marke
 
 **Stationary bootstrap.** Politis and Romano (1994); the moment and mixing conditions are those of Theorem 2 in their technical-report version (Politis and Romano, 1991). Weaker conditions: Gonçalves and de Jong (2003).
 
-**The ratio θ.** Confidence procedures that are bounded with probability one have zero worst-case coverage (Gleser and Hwang, 1987; Dufour, 1997), so test inversion is used.
+**The ratio θ.** Confidence procedures that are bounded with probability one have zero worst-case coverage (Gleser and Hwang, 1987; Dufour, 1997), so test inversion is used. The set is Fieller's (1954, Sections 2–4) for a ratio of means, with a Newey–West variance: it is bounded only when the denominator is significantly different from zero.
 
 ## Supporting derivation: the Garman–Kohlhagen PDE
 
