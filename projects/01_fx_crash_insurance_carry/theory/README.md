@@ -30,7 +30,7 @@ For pips spot delta the strike has the closed form K = F exp(σ²τ/2 − φσ�
 
 (c), marked P. For pips delta Δ_φ(K) = φ D Φ(φ d₊(K, σ(K))), if |∂σ/∂k| √τ |d₋| < 1 on an interval, with k = ln(K/F), then Δ_φ is strictly decreasing there and the smile delta-to-strike map is injective. The condition holds over ±4 ATM standard deviations at every calibrated month-end, and premium-adjusted deltas are checked numerically.
 
-Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention. Jäckel (2020, Section 2, eq. (20)) gives the single maximum through the inverse Mills ratio and the choice of the larger root, which is the argument written out for (b). Reiswich (2010, Section 3.8) shows that a smile delta can fail to be monotone; the sufficient condition in (c) is my own. The implementation is `src/qef/fx/gk.py`.
+Reiswich and Wystup (2012) give the delta definitions, the non-monotonicity of the premium-adjusted call delta and the right-branch convention. Jäckel (2020, Section 2, eq. (20)) gives the single maximum through the inverse Mills ratio and the choice of the larger root, which is the argument written out for (b); that the inverse Mills ratio is decreasing follows from the log-concavity of Φ (Bagnoli and Bergstrom, 2005, Section 2.1, Theorem 1) and is classical (Sampford, 1953). Reiswich (2010, Section 3.8) shows that a smile delta can fail to be monotone; the sufficient condition in (c) is my own. The implementation is `src/qef/fx/gk.py`.
 
 ## R6 (P). Diffusive null of the hedge cost
 
